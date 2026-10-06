@@ -139,22 +139,30 @@ is required or requested. Next: acquire candidate rows for Q1 plus bounded
 lookback/linkage; reconcile January 1 groups/events/gaps and Q1 SMART 9; review
 the feasibility and literature audits together before choosing a design.
 
-## Commit blocked by managed filesystem policy
+## Git checkpoint resolution (repository owner, 2026-10-06)
 
-The requested managed `git add` failed: `.git/index.lock: Operation not permitted`.
-No new commit was created; HEAD remains
-`0f27a5756af568eef2ed6548b251c5e2ac382420` on `work/backblaze-history-audit`.
-All work is preserved in the working tree; no raw data was deleted. No broader
-access request or external terminal was used. Remaining commands, once `.git`
-writing is supported by the managed permission profile:
+The managed Codex run initially could not stage changes because writing
+`.git/index.lock` returned `Operation not permitted`. This was a sandbox
+permission blocker, not evidence that the audit failed; no sandbox escape was
+attempted.
 
-```bash
-git -C /Users/aayushjha/Documents/asm2-backblaze add -- README.md data/README.md docs results scripts src/backblaze_audit/history.py tests/test_history.py
-git -C /Users/aayushjha/Documents/asm2-backblaze commit -m "audit: add bounded history and SMART feasibility gate"
-```
+After reviewing the staged file list, the repository owner used their local
+Terminal to commit the 23 lightweight audit files on
+`work/backblaze-history-audit`:
 
-These read the listed lightweight project files and write only repository Git
-index/objects/refs; they need no network. The current managed profile makes
-`.git` read-only. A safer alternative to out-of-sandbox execution is a narrowly
-managed `.git` write permission, or a user-created commit after reviewing the
-preserved files. No merge or push is required or authorized.
+- Commit: `b94364e3d2348fbc8e9e5422520d065334b5ef20`
+- Message: `audit: add bounded history and SMART feasibility gate`
+- Push to `origin/work/backblaze-history-audit`: succeeded.
+- Draft audit-review PR: #1, from the audit branch into `main`.
+
+The owner subsequently reran `python -m pytest -q` (**14 passed**),
+`python scripts/verify_outputs.py` (**passed**), and
+`PYTHONPATH=src python scripts/verify_history_outputs.py` (**passed with
+the ten post-failure observations explicitly flagged**). The working tree was
+clean afterward. A non-fatal warning reported installed `numexpr` 2.10.1
+below the version recommended by Pandas; it was not changed for this review.
+
+This note documents owner-reported local execution and the externally
+verifiable Git checkpoint. It does **not** approve the Q1 baseline-warning
+survival design, resolve observation/censoring assumptions, or authorize
+modelling. No PR merge has occurred at the time of this correction.
