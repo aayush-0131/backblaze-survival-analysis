@@ -1,0 +1,19 @@
+model,evidence_scope,baseline,column,rule,drives_present,later_arrivals,excluded_failure_at_or_before_baseline,excluded_by_rule,retained,subsequent_recorded_failures,administrative_survivors,unexplained_exits_within_observed_window,intermittent_gap_drives,notes
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_197_raw,all_baseline,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_197_raw,complete_warning,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_197_raw,complete_warning_and_age,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_197_raw,no_gap_sensitivity,19747,83,0,15235,4512,40,4472,0,0,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_5_raw,all_baseline,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_5_raw,complete_warning,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_5_raw,complete_warning_and_age,19747,83,0,0,19747,155,19592,0,15235,
+ST12000NM0008,observed_daily_files_only,2023-04-01,smart_5_raw,no_gap_sensitivity,19747,83,0,15235,4512,40,4472,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_197_raw,all_baseline,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_197_raw,complete_warning,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_197_raw,complete_warning_and_age,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_197_raw,no_gap_sensitivity,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_5_raw,all_baseline,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_5_raw,complete_warning,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_5_raw,complete_warning_and_age,0,4,0,0,0,0,0,0,0,
+WDC WUH722222ALE6L4,observed_daily_files_only,2023-04-01,smart_5_raw,no_gap_sensitivity,0,4,0,0,0,0,0,0,0,
+ST12000NM0008,q1_2026_verified_aggregate_only,2026-01-01 (proposed),smart_197_raw / smart_5_raw,UNAVAILABLE_without_Q1_rows,,,,,,,,,,"All Q1 unique drives are not the Jan1 risk set; baseline, exclusions, outcomes and gaps unavailable."
+WDC WUH722222ALE6L4,q1_2026_verified_aggregate_only,2026-01-01 (proposed),smart_197_raw / smart_5_raw,UNAVAILABLE_without_Q1_rows,,,,,,,,,,"All Q1 unique drives are not the Jan1 risk set; baseline, exclusions, outcomes and gaps unavailable."

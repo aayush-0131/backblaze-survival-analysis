@@ -1,0 +1,5 @@
+model,evidence_scope,intermittent_gap_drives,gap_episodes,missing_days_min,missing_days_median,missing_days_p95,missing_days_max,failed_drives_with_any_gap,failures_after_return,failures_after_return_order_verified,unflagged_exits_before_end,exits_within_7_days_of_end,permanence_verified,q1_boundary_linkage_verified,notes
+ST12000NM0008,observed_daily_files_only,15245,30631,1,1,1,30,115,115,True,0,0,False,False,
+WDC WUH722222ALE6L4,observed_daily_files_only,4,8,1,1,1,1,0,0,True,0,0,False,False,
+ST12000NM0008,q1_2026_verified_aggregate_only,,,,,,,,,,,,False,False,"Model-specific Q1 gaps, exits and returns require serial-level rows."
+WDC WUH722222ALE6L4,q1_2026_verified_aggregate_only,,,,,,,,,,,,False,False,"Model-specific Q1 gaps, exits and returns require serial-level rows."
