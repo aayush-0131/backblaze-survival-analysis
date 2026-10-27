@@ -44,3 +44,14 @@ The required outputs are under `results/tables/`, `results/audit/`, and `docs/`.
 ## Scope guardrail
 
 The operational flags in `model_inventory.csv` (`<1,000` drives and `<10` failures) are descriptive review cues, not universal statistical eligibility thresholds. No model or SMART attribute has been selected because of an observed association with failure.
+
+## Historical / SMART follow-up (2026-10-06)
+
+The [bounded history summary](results/audit/history_audit_summary.md) preserves
+the Q1 result above. It processes Q2 2023 for the two candidate models and reuses
+Q1 aggregates. Its narrower gate is **BLOCKED for Q1 baseline-warning design
+approval**: managed archive acquisition failed, and Q1 baseline event-by-warning,
+counter integrity and boundary linkage cannot be reconstructed from aggregates.
+Nominal powered hours are supported by historical endpoints, not physical age.
+The summary provides exact local reproduction commands. No models were fitted,
+final hypotheses frozen or all-history corpus downloaded.

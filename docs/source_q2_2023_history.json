@@ -1,0 +1,19 @@
+{
+  "access_date": "2026-10-06",
+  "source_quarter": "Q2 2023",
+  "download_url": "https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_Q2_2023.zip",
+  "official_download_page": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+  "content_length_bytes": 859566204,
+  "x_bz_file_id": "4_zefbb636e885eab02543a061a_f20122e2b8dde16ce_d20230728_m010330_c001_v0001099_t0033_u01690506210214",
+  "upload_timestamp_ms": 1690506210214,
+  "official_content_sha1": null,
+  "official_hash_note": "HEAD reports x-bz-content-sha1: none; no official full-file hash supplied in this response.",
+  "local_sha1": "768d7217bdf175a385f15c1454e696f740457f0c",
+  "local_sha256": "cd43df47416fed6d358da090b3cab8f96dfbb7bcba70ea983d43b663005462f3",
+  "zip_all_members_crc_result": "PASS",
+  "archive_entries_including_directories_and_macos_metadata": 184,
+  "published_compressed_size": "860 MB",
+  "published_expanded_size": "8.06 GB",
+  "acquisition": "Completed managed download from interrupted turn; validated locally after resume. No expanded archive retained.",
+  "scope_limitation": "Daily evidence covers Q2 2023 only. Q1 2026 aggregate evidence is reused from checkpoint; Q1 serial-level linkage is not available locally."
+}
