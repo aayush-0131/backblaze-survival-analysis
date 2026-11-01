@@ -169,6 +169,7 @@ def test_run_cohort_from_zip_checks_calendar_and_writes_ignored_outputs(tmp_path
     assert manifest["model"] == SEAGATE and len(manifest["member_evidence"]) == 2
     assert all(len(m["sha256"]) == 64 for m in manifest["member_evidence"])
     assert manifest["models_fitted"] == "none"
+    assert manifest["source"] == "synthetic.zip"  # no absolute local path in a shareable manifest
     good = {m["date"]: m["crc32"] for m in manifest["member_evidence"]}
     run_cohort(LocalZipSource(archive), out, baseline=D[0], end=D[1], expected_crc32=good)
     with pytest.raises(ValueError, match="CRC32"):
@@ -198,3 +199,10 @@ def test_incomplete_calendar_blocks_records_and_absent_column_is_missing():
         drive_records(a)
     a.ingest(frame(D[1], [["s", SEAGATE, 12, 0, 25, 0, 0]]), D[1])
     assert drive_records(a)[0]["baseline_smart_197_raw_state"] == "missing"
+
+
+def test_accounting_mismatch_raises_even_without_asserts():
+    records = drive_records(build())
+    records[0] = {**records[0], "inclusion": "unknown_class"}
+    with pytest.raises(ValueError, match="does not reconcile"):
+        cohort_accounting(records)

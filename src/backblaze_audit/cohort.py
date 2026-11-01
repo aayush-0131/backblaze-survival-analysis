@@ -72,6 +72,19 @@ class CohortAudit(HistoryAudit):
                 self.post_failure[key] += 1
 
 
+def _require(condition: bool, message: str):
+    """Reconciliation guard that, unlike ``assert``, still runs under ``python -O``."""
+    if not condition:
+        raise ValueError("Cohort accounting does not reconcile: " + message)
+
+
+def _shareable_source(source: Source) -> str:
+    """URL for remote sources; file/directory name only for local ones (no home paths)."""
+    if source.source_type == "remote_zip_range":
+        return source.source_value
+    return Path(source.source_value).name
+
+
 def _state(value) -> str:
     return "missing" if value is None else "zero" if value == 0 else "nonzero"
 
@@ -134,14 +147,15 @@ def cohort_accounting(records: list[dict]) -> list[dict]:
         out = {k: sum(r["outcome"] == k for r in group) for k in OUTCOMES}
         out.update(included=len(group), intermittent_gap_drives=sum(r["gap_episodes"] > 0 for r in group),
                    post_failure_row_drives=sum(r["post_failure_rows"] > 0 for r in group))
-        assert sum(out[k] for k in OUTCOMES) == len(group)
+        _require(sum(out[k] for k in OUTCOMES) == len(group), "outcomes do not sum to included drives")
         return out
 
     total = dict(attribute="all", stratum="all", drives_observed=len(records),
                  **{k: sum(r["inclusion"] == k for r in records) for k in INCLUSIONS[1:]},
                  **summary(included))
-    assert total["included"] + total["excluded_later_arrival"] + \
-        total["excluded_failure_on_or_before_baseline"] == total["drives_observed"]
+    _require(total["included"] + total["excluded_later_arrival"] +
+             total["excluded_failure_on_or_before_baseline"] == total["drives_observed"],
+             "inclusion classes do not sum to observed drives")
     rows = [total]
     for column in WARNING_COLUMNS:
         for state in ("zero", "nonzero", "missing"):
@@ -196,7 +210,7 @@ def run_cohort(source: Source, output_dir: Path, model: str = SEAGATE,
     write_table(output_dir / "cohort_accounting.csv", accounting)
     manifest = dict(
         model=model, baseline=baseline.isoformat(), window_end=end.isoformat(),
-        source_type=source.source_type, source=source.source_value, member_evidence=evidence,
+        source_type=source.source_type, source=_shareable_source(source), member_evidence=evidence,
         time_scale="calendar days from fixed baseline; SMART 9 is a descriptor, not age",
         boundary_linkage="not_attempted", models_fitted="none",
         crc32_checked_against_recorded_manifest=expected_crc32 is not None,
