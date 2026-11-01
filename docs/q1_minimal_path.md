@@ -108,7 +108,7 @@ produces, per drive:
 
 `cohort_accounting` reconciles totals overall and by 197 and 5 baseline
 strata. These are descriptive counts with no tests or estimates.
-`tests/test_cohort.py` has 10 tests built on invented trajectories, which are
+`tests/test_cohort.py` has 11 tests built on invented trajectories, which are
 not Backblaze data.
 
 ## 5. Exact input-data request / permitted retrieval (for Aayush)
@@ -180,7 +180,7 @@ are a later, separate request. The skeleton does not link them yet.
 
 - **Completed:** gap analysis (§1), conditional minimal plan (§2), checked
   assumptions (§3), and a tested per-drive cohort builder with a CLI and CRC
-  guard (§4). 24 of 24 tests pass, and the Q1 and history verifiers still pass.
+  guard (§4). 25 of 25 tests pass, and the Q1 and history verifiers still pass.
   No existing result file changed.
 - **Still blocked:** all Q1 cohort-level numbers. The managed network denies the
   Backblaze host. No Q1 rows exist in the repository or the session.
