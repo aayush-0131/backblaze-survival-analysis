@@ -56,3 +56,11 @@
 - Managed range acquisition failed DNS. Scope reduction: completed local Q2 2023 and Q1 aggregate context; deferred Q1 serial linkage, bounded Q4 lookback/Q2 returns and full historical census.
 - Prefer validating single-model Seagate fixed-baseline Q1 calendar follow-up; keep 197 lead / 5 predeclared alternative. Choose neither based on observed effect size. Proposed 14-day linkage is an operational sensitivity horizon, not permanence proof.
 - Narrow design-approval gate: **BLOCKED** pending the missing acquisition/reconciliation. Original Q1 data gate stays READY WITH CONDITIONS. Joint review with the literature audit is required; no final hypothesis/cohort frozen and no modelling, push or merge performed.
+
+## 2026-11-01 — issue #2: minimal Q1 path and cohort-construction skeleton
+
+- Re-ran the baseline before editing: 14 tests passed; Q1 and history verifiers passed.
+- Managed range smoke check to `f001.backblazeb2.com` failed (`CONNECT tunnel failed, response 403`; environment network policy). No Q1 candidate rows exist locally. Gate stays **BLOCKED**; no KM/Cox or other estimator was run.
+- Added `backblaze_audit.cohort`: per-drive fixed-baseline records for one exact model (inclusion, baseline 197/5 state, first recorded failure vs administrative censoring vs unexplained exit, gap flags, post-failure counts) and reconciled accounting. Reuses `HistoryAudit` validation and existing `Source` readers. Tested only with invented fixtures.
+- Proposed (not adopted) conventions are listed as A6–A8 in `docs/q1_minimal_path.md`; they need owner/group decisions. Unexplained exits remain non-events. SMART 9 stays a powered-hours descriptor, not age.
+- Serial-level outputs default to the ignored `data/processed/q1_cohort/`. No raw data, result tables or prior artifacts were changed.

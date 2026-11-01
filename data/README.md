@@ -18,3 +18,6 @@ earliest dates cover inspected files, not installation or complete history.
 Never load checkpoints from untrusted sources. Retain the valid source archive;
 no prior data was deleted. No Q1 daily candidate extract is available locally.
 Lightweight public evidence is in `results/audit/history_manifest.json`.
+
+`scripts/build_cohort_skeleton.py` writes serial-level cohort records to
+`processed/q1_cohort/` (ignored). Do not commit `cohort_drives.csv`.

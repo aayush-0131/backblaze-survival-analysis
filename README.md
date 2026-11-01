@@ -55,3 +55,13 @@ counter integrity and boundary linkage cannot be reconstructed from aggregates.
 Nominal powered hours are supported by historical endpoints, not physical age.
 The summary provides exact local reproduction commands. No models were fitted,
 final hypotheses frozen or all-history corpus downloaded.
+
+## Minimal Q1 path and cohort skeleton (2026-11-01)
+
+[`docs/q1_minimal_path.md`](docs/q1_minimal_path.md) lists exactly which Q1
+candidate-level inputs are missing, a conditional minimal design, a checked
+assumptions table, the unblock checklist and the exact data request.
+`scripts/build_cohort_skeleton.py` builds per-drive fixed-baseline records
+(inclusion, first recorded failure vs non-failure exit, gap flags) once Q1 rows
+are available; it is tested only on synthetic fixtures. The Q1 design gate
+remains **BLOCKED** and no survival model has been fitted.
