@@ -65,3 +65,14 @@ assumptions table, the unblock checklist and the exact data request.
 (inclusion, first recorded failure vs non-failure exit, gap flags) once Q1 rows
 are available; it is tested only on synthetic fixtures. The Q1 design gate
 remains **BLOCKED** and no survival model has been fitted.
+
+## Q1 cohort feasibility run (2026-11-02)
+
+The official Q1 ZIP was retrieved with owner authorisation. It passed SHA1, all 90
+member CRC32 and size checks, and a full CRC test. The unchanged builder then ran
+on `ST12000NM0008` and reconciled exactly with the Q1 audit: 18,650 drives,
+1,664,558 drive-days, 129 failure flags. The fixed Jan 1 cohort has 18,533 included
+drives. See [`docs/q1_cohort_feasibility.md`](docs/q1_cohort_feasibility.md).
+Event counts by baseline 197/5 group are **sealed** until the group records its
+event-support rule. The design gate remains **BLOCKED** pending decisions, and no
+survival model has been fitted.

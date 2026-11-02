@@ -1,5 +1,11 @@
 # Minimal Q1 path to class deliverables — plan and construction handoff (2026-11-01)
 
+> **Update 2026-11-02.** Q1 rows have now been acquired and verified, and the builder
+> has run on them. See [`q1_cohort_feasibility.md`](q1_cohort_feasibility.md). The
+> missing-data blocker below is resolved. The gate stays **BLOCKED**, pending the
+> section 7 decisions. Event counts by baseline group are sealed until the
+> event-support rule is recorded. The original text below is kept as written.
+
 **Status: Q1 2026 baseline-warning design is still BLOCKED.** No Q1 candidate
 rows were available in this session, so nothing was fitted and no Q1 cohort
 count is reported. This document is a proposal for Aayush and the group to
@@ -190,3 +196,15 @@ are a later, separate request. The skeleton does not link them yet.
   3. A8: gap policy (at risk throughout, or sensitivity exclusion)?
   4. The event-support rule for 197 versus 5, fixed before tabulation.
   5. Whether the Q2 2023 fallback is acceptable at all.
+
+## 9. Checklist status (2026-11-02)
+
+- [x] Q1 candidate rows acquired (Option A). SHA1 and all 90 member CRC32 match
+  (`q1_retrieval_record.json`).
+- [x] `build_cohort_skeleton.py` run, accounting reconciles, manifest kept
+  (`q1_cohort_feasibility.md`).
+- [ ] Event-support rule. **Still open; group counts sealed until it is recorded.**
+- [ ] A6–A8, plus timing of failures flagged on return from a gap (new). Still open.
+- [ ] Terminal-first-flag policy. Still open, though Q1 has 0 post-failure rows for this model.
+- [ ] Joint review with the teammate SMART/literature audit.
+- [ ] Owner approval to lift the BLOCKED gate.

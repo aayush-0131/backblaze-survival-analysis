@@ -21,3 +21,10 @@ Lightweight public evidence is in `results/audit/history_manifest.json`.
 
 `scripts/build_cohort_skeleton.py` writes serial-level cohort records to
 `processed/q1_cohort/` (ignored). Do not commit `cohort_drives.csv`.
+
+2026-11-02: `raw/data_Q1_2026.zip` (1,312,921,361 bytes, SHA1
+`23448d57…0b13c`) was retrieved into the ignored `raw/` of an ephemeral cloud session,
+so it does not persist. Re-download it and check the SHA1 to reproduce. Builder outputs
+were written to `processed/q1_cohort/` (ignored, serial-level). `cohort_accounting.csv` there holds
+the **sealed** per-group event counts; do not share it before the event-support rule
+is recorded. Integrity evidence: `docs/q1_retrieval_record.json`.

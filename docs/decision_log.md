@@ -64,3 +64,27 @@
 - Added `backblaze_audit.cohort`: per-drive fixed-baseline records for one exact model (inclusion, baseline 197/5 state, first recorded failure vs administrative censoring vs unexplained exit, gap flags, post-failure counts) and reconciled accounting. Reuses `HistoryAudit` validation and existing `Source` readers. Tested only with invented fixtures.
 - Proposed (not adopted) conventions are listed as A6–A8 in `docs/q1_minimal_path.md`; they need owner/group decisions. Unexplained exits remain non-events. SMART 9 stays a powered-hours descriptor, not age.
 - Serial-level outputs default to the ignored `data/processed/q1_cohort/`. No raw data, result tables or prior artifacts were changed.
+
+## 2026-11-02 — Q1 retrieval and cohort-construction feasibility run (PR #3)
+
+- The owner authorised retrieval of the official Q1 2026 ZIP (about 1.3 GB) for cohort
+  construction and feasibility validation only.
+- The 32-byte smoke test to `f001.backblazeb2.com` now succeeds (HTTP 206, `PK` header).
+  Retrieved with Option A to the ignored `data/raw/`, not extracted.
+- Integrity: exact size, SHA1 equals the recorded large-file SHA1, 90/90 member CRC32 and
+  sizes match `data_manifest.json`, `testzip` passed. The builder's `--expect-manifest`
+  guard was active. Record: `docs/q1_retrieval_record.json`.
+- Ran the unchanged `build_cohort_skeleton.py`. Reconciled exactly with the Q1 audit
+  (18,650 drives / 1,664,558 drive-days / 129 failure flags). Outputs are deterministic
+  (byte-identical rerun).
+- **Sealing.** Following `q1_minimal_path.md` section 2 step 3, event counts by 197/5
+  baseline group were not read or reported. The builder's stdout went to the ignored
+  tree. `scripts/summarize_q1_cohort.py` publishes only outcome-blinded aggregates
+  (`docs/q1_cohort_feasibility_summary.json`) and re-verifies output hashes and
+  reconciliation.
+- No convention (A6–A8), censoring date, gap policy or event-support threshold was
+  chosen. New open item: timing of failures flagged on the first day back after a gap
+  (21 of 111 included failures).
+- Nothing was copied to `results/`. No KM, Cox or other estimator was run. No raw or
+  drive-level data was committed. PR #3 stays draft and unmerged.
+- The gate remains **BLOCKED**, now pending recorded decisions rather than missing data.
