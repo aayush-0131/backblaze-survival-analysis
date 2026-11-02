@@ -88,3 +88,24 @@
 - Nothing was copied to `results/`. No KM, Cox or other estimator was run. No raw or
   drive-level data was committed. PR #3 stays draft and unmerged.
 - The gate remains **BLOCKED**, now pending recorded decisions rather than missing data.
+
+## 2026-11-02 — bounded Apr 1–14 linkage of Q1 unexplained exits (PR #3)
+
+- The owner authorised retrieval of official Apr 1–14, 2026 daily files solely to
+  investigate the 96 Q1 unexplained exits.
+- Read the Q2 2026 ZIP central directory first. The 14 members are 316,484,017
+  compressed bytes (15.1% of 2,092,757,685), so the full archive was not required.
+  Read them by HTTP byte range with the repo-pinned `remotezip`; measured receive was
+  320,330,942 bytes. Nothing was written to `data/raw/`.
+- Integrity per member: 14/14 CRC32 verified on full decompression, sizes equal the
+  directory, complete calendar, row dates equal file dates, 0 duplicate keys. The
+  whole-archive SHA1 was not checked, because that would need the full download.
+- Reused the same-session Q1 outputs after re-verifying their hashes. Matching is by
+  serial across all model labels.
+- Result: 93/96 reappeared (88/88 near-end, 5/8 earlier). 3 January exits were not
+  observed through Apr 14; their status is unresolved, not retired or failed.
+  4 reappeared drives carry an April failure flag, which is descriptive only and not
+  a Q1 event.
+- No change to cohort definition, baseline, censoring policy or failure dates. No
+  SMART-group breakdown, no unsealing, no model fitted. Whether and how to use the
+  linkage stays an owner/group decision (A6/A7).

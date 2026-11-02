@@ -76,3 +76,11 @@ drives. See [`docs/q1_cohort_feasibility.md`](docs/q1_cohort_feasibility.md).
 Event counts by baseline 197/5 group are **sealed** until the group records its
 event-support rule. The design gate remains **BLOCKED** pending decisions, and no
 survival model has been fitted.
+
+## Q1 exit linkage, Apr 1–14 (2026-11-02)
+
+A bounded byte-range read of 14 April daily files (about 316 MB of the Q2 ZIP, with
+per-member CRC verification) found that 93 of the 96 Q1 unexplained exits reappear.
+That includes all 88 drives last seen Mar 28–30. 3 January exits remain unresolved.
+See [`docs/q1_exit_linkage.md`](docs/q1_exit_linkage.md). The Q1 cohort is unchanged
+and no model was fitted.

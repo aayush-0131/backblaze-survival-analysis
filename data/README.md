@@ -28,3 +28,7 @@ so it does not persist. Re-download it and check the SHA1 to reproduce. Builder 
 were written to `processed/q1_cohort/` (ignored, serial-level). `cohort_accounting.csv` there holds
 the **sealed** per-group event counts; do not share it before the event-support rule
 is recorded. Integrity evidence: `docs/q1_retrieval_record.json`.
+
+2026-11-02 (later): `scripts/link_q1_exits.py` streams only the Apr 1–14 members of
+`data_Q2_2026.zip` by byte range, and writes nothing to `raw/`. Serial-level output goes
+to `processed/q1_exit_linkage/` (ignored). Do not commit it.

@@ -208,3 +208,9 @@ are a later, separate request. The skeleton does not link them yet.
 - [ ] Terminal-first-flag policy. Still open, though Q1 has 0 post-failure rows for this model.
 - [ ] Joint review with the teammate SMART/literature audit.
 - [ ] Owner approval to lift the BLOCKED gate.
+
+## 10. Status (2026-11-02, later)
+
+- [x] Bounded Apr 1–14 linkage for the 96 Q1 exits (`q1_exit_linkage.md`). It is a
+  sensitivity input only; the Q1 cohort is unchanged. The Dec 18–31 lookback has not
+  been retrieved.

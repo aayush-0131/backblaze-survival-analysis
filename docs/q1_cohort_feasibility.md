@@ -219,3 +219,18 @@ PYTHONPATH=src python scripts/summarize_q1_cohort.py --check
 ```
 
 The redirect keeps the sealed per-group counts off the terminal.
+
+## 7. Update 2026-11-02: Apr 1–14 exit linkage
+
+See [`q1_exit_linkage.md`](q1_exit_linkage.md). With the owner's authorisation, the 14
+April daily members were read by byte range (about 316 MB of the 2.09 GB Q2
+archive). Each member passed its CRC32 and size checks.
+
+- 93 of the 96 unexplained exits reappeared, including **all 88 near-end exits** and
+  5 of the 8 earlier exits. 3 January exits were not observed through Apr 14.
+- §3 (Unexplained exits) and §5 above described the near-end exits as "most plausibly
+  unfinished gaps". That is now verified for all 88. §5 also said "the 8 deep exits
+  need no linkage", which proved wrong: the linkage covered all 96, and 5 of the 8
+  reappeared.
+- The Q1 cohort outputs, outcome classes and failure dates are unchanged. No group
+  breakdown was computed and no model was fitted.
