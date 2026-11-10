@@ -173,6 +173,27 @@ def run_cohort(source: Source, output_dir: Path, model: str = SEAGATE,
     ``results/audit/data_manifest.json``); any mismatch or unverifiable member
     is refused before reading. Outputs are serial-level; keep them ignored.
     """
+    audit, evidence = stream_cohort(source, model, baseline, end, chunksize, expected_crc32)
+    records = drive_records(audit)
+    accounting = cohort_accounting(records)
+    output_dir = Path(output_dir)
+    write_table(output_dir / "cohort_drives.csv", records)
+    write_table(output_dir / "cohort_accounting.csv", accounting)
+    manifest = dict(
+        model=model, baseline=baseline.isoformat(), window_end=end.isoformat(),
+        source_type=source.source_type, source=_shareable_source(source), member_evidence=evidence,
+        time_scale="calendar days from fixed baseline; SMART 9 is a descriptor, not age",
+        boundary_linkage="not_attempted", models_fitted="none",
+        crc32_checked_against_recorded_manifest=expected_crc32 is not None,
+        output_sha256={n: digest(output_dir / n) for n in ("cohort_drives.csv", "cohort_accounting.csv")})
+    (output_dir / "cohort_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    return accounting
+
+
+def stream_cohort(source: Source, model: str = SEAGATE, baseline: date = Q1_START, end: date = Q1_END,
+                  chunksize: int = 50_000, expected_crc32: dict[str, str] | None = None
+                  ) -> tuple[CohortAudit, list[dict]]:
+    """Validated streaming pass shared by ``run_cohort`` and later analyses; writes nothing."""
     members = [m for m in source.members()
                if baseline <= date.fromisoformat(m.date_text) <= end and not m.name.startswith("__MACOSX/")]
     dates = sorted(date.fromisoformat(m.date_text) for m in members)
@@ -203,17 +224,4 @@ def run_cohort(source: Source, output_dir: Path, model: str = SEAGATE,
         audit.ingest(selected, day)
         evidence.append(dict(date=day.isoformat(), member=member.name, crc32=member.crc32,
                              sha256=sha, candidate_rows=len(selected)))
-    records = drive_records(audit)
-    accounting = cohort_accounting(records)
-    output_dir = Path(output_dir)
-    write_table(output_dir / "cohort_drives.csv", records)
-    write_table(output_dir / "cohort_accounting.csv", accounting)
-    manifest = dict(
-        model=model, baseline=baseline.isoformat(), window_end=end.isoformat(),
-        source_type=source.source_type, source=_shareable_source(source), member_evidence=evidence,
-        time_scale="calendar days from fixed baseline; SMART 9 is a descriptor, not age",
-        boundary_linkage="not_attempted", models_fitted="none",
-        crc32_checked_against_recorded_manifest=expected_crc32 is not None,
-        output_sha256={n: digest(output_dir / n) for n in ("cohort_drives.csv", "cohort_accounting.csv")})
-    (output_dir / "cohort_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
-    return accounting
+    return audit, evidence

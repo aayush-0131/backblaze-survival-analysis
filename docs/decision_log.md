@@ -162,3 +162,22 @@
     days removed via start/stop intervals);
   - lifelines as the engine, with a statsmodels cross-check.
 - The plan is committed **before** any model is fitted.
+
+## 2026-11-10 — pre-specified survival analysis run (PR #3)
+
+- Ran `scripts/fit_q1_survival.py` under signed D9 and the plan committed in `2b91f38`.
+  Inputs were hash-verified, and the gap episodes were re-derived with byte-for-byte
+  reproduction of `cohort_drives.csv`.
+- Primary: KM S(89) is 0.9955 for 197 = 0 and 0.8262 for 197 > 0. Cox HR 43.2
+  (95% CI 28.1–66.3). The PH test rejects proportionality (p = 0.0069): the excess
+  hazard is concentrated early. S1 gives HR 43.2 and S2 gives HR 44.1.
+- Numerical and reporting deviations, recorded in `docs/q1_survival_results.md` §3:
+  - damped optimisers, because undamped Newton diverged;
+  - a half-day entry shift in the statsmodels cross-check, to match the plan's
+    strict risk set;
+  - KM at-risk counts computed directly;
+  - no PH test for S2.
+
+  None of these changes the model.
+- Refactor: `run_cohort` now delegates its streaming loop to `stream_cohort`. Its
+  outputs are byte-identical, as the analysis rerun verified.

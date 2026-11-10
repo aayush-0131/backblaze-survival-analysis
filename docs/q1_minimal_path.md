@@ -227,3 +227,10 @@ are a later, separate request. The skeleton does not link them yet.
 - [x] A6–A8, return-day failure timing, terminal-first-flag and excluded failures recorded as D2–D7 (pending group review).
 - [ ] Joint review with the teammate SMART/literature audit.
 - [ ] Owner approval to lift the gate (D9). Not signed; no KM or Cox work started.
+
+## 12. Status (2026-11-10, later)
+
+- [x] Owner signed D9; the analysis plan was committed before fitting (`2b91f38`).
+- [x] KM and one Cox model by baseline SMART 197, with S1 and S2 sensitivities
+  (`q1_survival_results.md`).
+- [ ] Joint review with the teammate SMART/literature audit (still not documented).

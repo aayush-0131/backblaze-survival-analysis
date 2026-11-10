@@ -93,3 +93,17 @@ The sealed counts were read only after that commit. Under D1 (≥ 10 events), th
 SMART 197-nonzero group has 28 recorded failures, so SMART 197 is kept. See
 `docs/q1_group_counts.json` and §8 of `docs/q1_cohort_feasibility.md`. The gate (D9)
 is not signed and no model has been fitted.
+
+## Q1 survival analysis (2026-11-10)
+
+The owner signed D9, which lifted the gate for the plan in `docs/q1_analysis_plan.md`
+(committed before fitting). Baseline SMART 197 > 0 (162 drives, 28 failures) against
+197 = 0 (18,371 drives, 83 failures):
+
+- KM survival to Mar 31 is 0.826 versus 0.9955.
+- Cox HR is 43.2 (95% CI 28.1–66.3), but proportional hazards is rejected
+  (p = 0.007), because the excess hazard is concentrated early.
+- The sensitivity analyses for exits (S1) and gaps (S2) agree.
+
+Results and limitations are in `docs/q1_survival_results.md`, and outputs in
+`results/survival/`. Reproduce with `scripts/fit_q1_survival.py --check`.
