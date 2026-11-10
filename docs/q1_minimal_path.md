@@ -214,3 +214,9 @@ are a later, separate request. The skeleton does not link them yet.
 - [x] Bounded Apr 1–14 linkage for the 96 Q1 exits (`q1_exit_linkage.md`). It is a
   sensitivity input only; the Q1 cohort is unchanged. The Dec 18–31 lookback has not
   been retrieved.
+
+## 11. Status (2026-11-10)
+
+- Owner confirmed both downloads were authorised.
+- All remaining unblock items are decisions, now collected with options in
+  [`q1_decision_record.md`](q1_decision_record.md) (D1–D9, all blank).

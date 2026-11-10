@@ -109,3 +109,13 @@
 - No change to cohort definition, baseline, censoring policy or failure dates. No
   SMART-group breakdown, no unsealing, no model fitted. Whether and how to use the
   linkage stays an owner/group decision (A6/A7).
+
+## 2026-11-10 — owner confirmation of downloads; decision form opened (PR #3)
+
+- Aayush confirmed in chat that both downloads made by the other session were
+  authorised: the full Q1 2026 ZIP and the bounded Apr 1–14 2026 daily members.
+- Opened `docs/q1_decision_record.md`, which collects the open decisions (D1–D9:
+  event-support rule, A6–A8, gap-return timing, terminal-first-flag, excluded
+  failures, presentation, gate) with options only. Every decision is blank; none
+  was taken. The gate remains **BLOCKED**. No data was read, no counts were
+  unsealed and no model was fitted.
