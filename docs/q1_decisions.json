@@ -1,5 +1,5 @@
 {
-  "status": "D1-D8 selected by Claude at Aayush's request, pending group review; D9 (lift the gate) NOT signed",
+  "status": "D1-D9 signed by the owner (Aayush), 2026-11-10; gate lifted for docs/q1_analysis_plan.md",
   "authorisation": "Aayush, 2026-11-10, in chat: \"go ahead with D1-D8 as proposed\" (proposal: other Claude session's message of 2026-11-10T20:53Z, reproduced in docs/q1_decision_record.md)",
   "recorded_before_unsealing": true,
   "D1": {
@@ -10,7 +10,10 @@
     "smart_5_minimum": "none set by the rule as written",
     "basis": "matches the repository's existing '<10 failures' descriptive review cue"
   },
-  "D2": {"option": "a", "choice": "Administrative censoring at Mar 31 for drives present on Mar 31 without a failure flag"},
+  "D2": {
+    "option": "a",
+    "choice": "Administrative censoring at Mar 31 for drives present on Mar 31 without a failure flag"
+  },
   "D3": {
     "option": "d with a",
     "primary": "Censor unexplained exits at their last observed Q1 day; ignore the April linkage",
@@ -18,13 +21,34 @@
     "unresolved_january_exits": "The 3 not observed through Apr 14 are censored at their last observed day in every analysis",
     "april_failure_flags": "The 4 April failure flags are reported in the informative-censoring limitation only"
   },
-  "D4": {"option": "c", "primary": "At risk throughout gaps", "sensitivity": "Gap days excluded from the risk set"},
-  "D5": {"option": "a", "choice": "Flag date is the event date", "limitation": "21 of 44 gap-preceded failures were flagged on the return day (exploratory figure)"},
-  "D6": {"option": "a", "choice": "First failure flag is terminal; any later rows are audited and contribute no risk time"},
-  "D7": {"option": "a", "choice": "Keep the 17 later-arrival failures and 1 baseline-date failure excluded; report the counts"},
+  "D4": {
+    "option": "c",
+    "primary": "At risk throughout gaps",
+    "sensitivity": "Gap days excluded from the risk set"
+  },
+  "D5": {
+    "option": "a",
+    "choice": "Flag date is the event date",
+    "limitation": "21 of 44 gap-preceded failures were flagged on the return day (exploratory figure)"
+  },
+  "D6": {
+    "option": "a",
+    "choice": "First failure flag is terminal; any later rows are audited and contribute no risk time"
+  },
+  "D7": {
+    "option": "a",
+    "choice": "Keep the 17 later-arrival failures and 1 baseline-date failure excluded; report the counts"
+  },
   "D8": {
     "expected_failures_figure": "Keep, labelled plainly as illustrative arithmetic under no association, not an estimate or projection",
     "overlap": "State that 110 drives are nonzero on both SMART 197 and SMART 5 (68% of the 197-nonzero group)"
   },
-  "D9": {"signed": false}
+  "D9": {
+    "signed": true,
+    "by": "Aayush (owner)",
+    "date": "2026-11-10",
+    "scope": "pre-specified analysis in docs/q1_analysis_plan.md",
+    "prerequisite_not_evidenced": "joint review with the teammate SMART/literature audit (not in repository)"
+  },
+  "owner_signature": "Aayush, 2026-11-10, in chat: \"Go ahead. I sign D9 and others\""
 }

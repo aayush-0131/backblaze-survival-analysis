@@ -147,3 +147,18 @@
   **SMART 197 is kept**. Other groups: 197-zero 83 / 18,371; 5-nonzero 61 / 1,271;
   5-zero 50 / 17,262. Descriptive counts only (`docs/q1_group_counts.json`).
 - D9 is not signed. The gate stays **BLOCKED**; no model was fitted.
+
+## 2026-11-10 — owner signs D1–D9; analysis plan pre-specified (PR #3)
+
+- Aayush: "Go ahead. I sign D9 and others". D1–D8 are now signed by the owner, and
+  D9 is signed, which lifts the gate for the plan in `docs/q1_analysis_plan.md`.
+- D9's prerequisite, a joint review with the teammate SMART/literature audit, is not
+  documented in the repository, and no such audit exists on any branch. The owner
+  signed regardless; this is carried as a limitation.
+- The plan covers:
+  - KM by baseline SMART 197 group, plus one Cox model with a single binary
+    covariate (Efron ties), with a PH check;
+  - sensitivities S1 (linkage: reappeared exits censored at Mar 31) and S2 (gap
+    days removed via start/stop intervals);
+  - lifelines as the engine, with a statsmodels cross-check.
+- The plan is committed **before** any model is fitted.

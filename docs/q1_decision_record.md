@@ -1,6 +1,8 @@
 # Q1 design decision record — form for Aayush and the group (opened 2026-11-10)
 
-**Status update 2026-11-10: D1–D8 recorded** (selected by Claude at Aayush's request, pending group review; machine-readable copy in `q1_decisions.json`). **D9 is not signed; the gate stays BLOCKED.**
+**Status update 2026-11-10 (later): D1–D9 signed by the owner; gate lifted for `q1_analysis_plan.md`.**
+
+**Earlier status update 2026-11-10: D1–D8 recorded** (selected by Claude at Aayush's request, pending group review; machine-readable copy in `q1_decisions.json`). **D9 is not signed; the gate stays BLOCKED.**
 
 **Original status: BLOCKED. Every decision below is blank.** This form collects in one place
 the open decisions from `q1_minimal_path.md` (A6–A8), `q1_cohort_feasibility.md` §4
@@ -31,7 +33,7 @@ Options (not exhaustive):
 - (b) Keep 197 regardless of event count; report sparse-group limitations.
 - (c) Report both attributes descriptively, with 197 labelled primary.
 
-**Decision:** Option (a) with *k* = 10. Keep SMART 197 if its nonzero baseline group has at least 10 recorded failures in the Q1 window (ties keep 197); otherwise switch to SMART 5. The rule as written sets no minimum for SMART 5. Reason: matches the repository's existing "<10 failures" review cue. Recorded and committed **before** the sealed counts were read. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (a) with *k* = 10. Keep SMART 197 if its nonzero baseline group has at least 10 recorded failures in the Q1 window (ties keep 197); otherwise switch to SMART 5. The rule as written sets no minimum for SMART 5. Reason: matches the repository's existing "<10 failures" review cue. Recorded and committed **before** the sealed counts were read. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 **D1 applied (2026-11-10, after the decision commit `e3cf5dd`):** the 197-nonzero group has 28 recorded failures (≥ 10), so SMART 197 is kept. See `q1_group_counts.json`.
 
@@ -42,7 +44,7 @@ Drives present on Mar 31 with no failure flag (18,326 as currently classified).
 - (a) Censor at Mar 31 (standard for a fixed-window design).
 - (b) Other (state).
 
-**Decision:** Option (a): censor at Mar 31. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (a): censor at Mar 31. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D3. Exits and the Apr 1–14 linkage (A7)
 
@@ -58,7 +60,7 @@ Drives present on Mar 31 with no failure flag (18,326 as currently classified).
 Also decide how the 3 unresolved January exits are censored, and whether the 4
 April failure flags appear in the informative-censoring limitation.
 
-**Decision:** Option (d) with (a). Primary: censor exits at their last observed Q1 day. Sensitivity: use the April linkage, treating the 93 reappeared drives as censored at Mar 31. The 3 unresolved January exits are censored at their last observed day. The 4 April failure flags go in the informative-censoring limitation. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (d) with (a). Primary: censor exits at their last observed Q1 day. Sensitivity: use the April linkage, treating the 93 reappeared drives as censored at Mar 31. The 3 unresolved January exits are censored at their last observed day. The 4 April failure flags go in the informative-censoring limitation. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D4. Gap policy (A8)
 
@@ -69,7 +71,7 @@ baseline groups; 44 of the 111 failures follow a gap.
 - (b) Remove gap days from the risk set (start/stop intervals).
 - (c) (a) as primary, with a no-gap or gap-excluded sensitivity analysis.
 
-**Decision:** Option (c): at risk throughout gaps as primary, with a sensitivity analysis that excludes gap days. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (c): at risk throughout gaps as primary, with a sensitivity analysis that excludes gap days. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D5. Timing of failures flagged on the first day back after a gap
 
@@ -80,7 +82,7 @@ baseline groups; 44 of the 111 failures follow a gap.
 - (b) Treat the event as occurring somewhere in the gap (interval-type), possibly as
   a sensitivity analysis.
 
-**Decision:** Option (a): the flag date is the event date. The 21 return-day failures are stated as a limitation. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (a): the flag date is the event date. The 21 return-day failures are stated as a limitation. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D6. Terminal-first-flag policy
 
@@ -90,7 +92,7 @@ effect, but the policy should still be written down for reuse.
 - (a) The first flag is terminal; later rows are audited and dropped from risk time.
 - (b) Other (state).
 
-**Decision:** Option (a): the first flag is terminal. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (a): the first flag is terminal. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D7. Failures outside the fixed-baseline risk set
 
@@ -100,7 +102,7 @@ design.
 - (a) Confirm exclusion and report the counts.
 - (b) Other (state).
 
-**Decision:** Option (a): keep the 17 later-arrival failures and the 1 baseline-date failure excluded, and report the counts. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Option (a): keep the 17 later-arrival failures and the 1 baseline-date failure excluded, and report the counts. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D8. Presentation items
 
@@ -108,13 +110,13 @@ design.
   in `q1_cohort_feasibility.md` §4: keep or remove before D1 is set?
 - How to state the 110-drive overlap between the 197 and 5 nonzero groups.
 
-**Decision:** Keep the "expected failures" figure, labelled plainly as illustrative arithmetic under no association (not an estimate or projection). State the 110-drive overlap between the 197 and 5 nonzero groups. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
+**Decision:** Keep the "expected failures" figure, labelled plainly as illustrative arithmetic under no association (not an estimate or projection). State the 110-drive overlap between the 197 and 5 nonzero groups. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **signed by the owner (Aayush), 2026-11-10** ("I sign D9 and others"). Group review not documented.
 
 ## D9. Lift the gate
 
 Requires D1–D8 recorded, and joint review with the teammate SMART/literature audit.
 
-**Decision (owner):** ____________________
+**Decision (owner):** **Signed by Aayush, 2026-11-10** ("Go ahead. I sign D9 and others"). The gate is lifted for the pre-specified analysis in `q1_analysis_plan.md`. Prerequisite not evidenced: no joint review with the teammate SMART/literature audit is documented in this repository (no such audit is on any branch); the owner signed regardless, and this is carried as an open limitation.
 
 ## Source of the D1–D8 choices
 
