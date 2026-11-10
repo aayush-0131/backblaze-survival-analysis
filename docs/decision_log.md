@@ -119,3 +119,21 @@
   failures, presentation, gate) with options only. Every decision is blank; none
   was taken. The gate remains **BLOCKED**. No data was read, no counts were
   unsealed and no model was fitted.
+
+## 2026-11-10 — D1–D8 recorded before unsealing (PR #3)
+
+- Aayush: "go ahead with D1–D8 as proposed". The choices are the proposal of
+  2026-11-10T20:53Z, now written into `docs/q1_decision_record.md` and
+  `docs/q1_decisions.json`, labelled "selected by Claude at Aayush's request, pending
+  group review".
+- D1: keep SMART 197 if its nonzero group has ≥ 10 recorded Q1 failures, else switch
+  to SMART 5 (no minimum for 5). D2 censor at Mar 31. D3 exits censored at last
+  observed day, linkage as sensitivity (93 reappeared censored at Mar 31), 3 January
+  exits at last seen, 4 April flags as a limitation. D4 at risk through gaps, gap-day
+  exclusion as sensitivity. D5 flag date is the event date. D6 first flag terminal.
+  D7 exclusions kept and reported. D8 label the expected-failures figure; state the
+  110-drive overlap.
+- The D1 threshold is also fixed in code (`backblaze_audit.decisions`). The unseal
+  script refuses to run unless `q1_decisions.json` is committed and unmodified.
+- This entry is committed and pushed **before** the sealed accounting is read.
+- D9 is not signed. The gate stays **BLOCKED**; no model is fitted.

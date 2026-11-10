@@ -162,7 +162,8 @@ byte-identical to the main run.
    - if failure were unrelated to baseline state, that proportion would imply about
      1.0 failure in the 197-nonzero group and about 7.6 in the 5-nonzero group
 
-   That is arithmetic only, not a projection of the sealed counts.
+   **Label (D8):** illustrative arithmetic under no association only. It is not an
+   estimate and not a projection of the sealed counts.
 2. **A6 (administrative censoring on Mar 31).** Applies to 18,326 drives as currently
    classified.
 3. **A7 (exit censoring date).** For 88 of the 96 exits the two candidate dates differ
