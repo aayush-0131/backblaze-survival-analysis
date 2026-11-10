@@ -33,6 +33,8 @@ Options (not exhaustive):
 
 **Decision:** Option (a) with *k* = 10. Keep SMART 197 if its nonzero baseline group has at least 10 recorded failures in the Q1 window (ties keep 197); otherwise switch to SMART 5. The rule as written sets no minimum for SMART 5. Reason: matches the repository's existing "<10 failures" review cue. Recorded and committed **before** the sealed counts were read. Selected by Claude at Aayush's request ("go ahead with D1–D8 as proposed", 2026-11-10); **pending group review**.
 
+**D1 applied (2026-11-10, after the decision commit `e3cf5dd`):** the 197-nonzero group has 28 recorded failures (≥ 10), so SMART 197 is kept. See `q1_group_counts.json`.
+
 ## D2. Administrative censoring on Mar 31 (A6)
 
 Drives present on Mar 31 with no failure flag (18,326 as currently classified).

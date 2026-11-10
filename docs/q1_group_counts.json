@@ -1,0 +1,94 @@
+{
+  "accounting": [
+    {
+      "administrative_censoring": 18326,
+      "attribute": "all",
+      "drives_observed": 18650,
+      "excluded_failure_on_or_before_baseline": 1,
+      "excluded_later_arrival": 116,
+      "included": 18533,
+      "intermittent_gap_drives": 1886,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 111,
+      "stratum": "all",
+      "unexplained_exit": 96
+    },
+    {
+      "administrative_censoring": 18195,
+      "attribute": "smart_197_raw",
+      "included": 18371,
+      "intermittent_gap_drives": 1850,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 83,
+      "stratum": "zero",
+      "unexplained_exit": 93
+    },
+    {
+      "administrative_censoring": 131,
+      "attribute": "smart_197_raw",
+      "included": 162,
+      "intermittent_gap_drives": 36,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 28,
+      "stratum": "nonzero",
+      "unexplained_exit": 3
+    },
+    {
+      "administrative_censoring": 0,
+      "attribute": "smart_197_raw",
+      "included": 0,
+      "intermittent_gap_drives": 0,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 0,
+      "stratum": "missing",
+      "unexplained_exit": 0
+    },
+    {
+      "administrative_censoring": 17132,
+      "attribute": "smart_5_raw",
+      "included": 17262,
+      "intermittent_gap_drives": 1705,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 50,
+      "stratum": "zero",
+      "unexplained_exit": 80
+    },
+    {
+      "administrative_censoring": 1194,
+      "attribute": "smart_5_raw",
+      "included": 1271,
+      "intermittent_gap_drives": 181,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 61,
+      "stratum": "nonzero",
+      "unexplained_exit": 16
+    },
+    {
+      "administrative_censoring": 0,
+      "attribute": "smart_5_raw",
+      "included": 0,
+      "intermittent_gap_drives": 0,
+      "post_failure_row_drives": 0,
+      "recorded_failure": 0,
+      "stratum": "missing",
+      "unexplained_exit": 0
+    }
+  ],
+  "cohort_accounting_sha256": "33cd2bd92e48104ce34bbed2c4e787fa4f7478f2e97344d2b5006d94bda1b6e2",
+  "d1": {
+    "alternative_attribute": "smart_5_raw",
+    "chosen_attribute": "smart_197_raw",
+    "lead_attribute": "smart_197_raw",
+    "lead_meets_rule": true,
+    "lead_nonzero_included": 162,
+    "lead_nonzero_recorded_failures": 28,
+    "min_events": 10,
+    "rule": "Keep smart_197_raw if its nonzero baseline group has >= 10 recorded failures in the Q1 window; otherwise switch to smart_5_raw. No minimum is set for smart_5_raw."
+  },
+  "decision_record": {
+    "commit": "e3cf5dd910e78a25bd7662022b26bf449b9f5c38",
+    "committed_at": "2026-11-10T20:59:57+00:00",
+    "file": "docs/q1_decisions.json"
+  },
+  "status": "descriptive counts only; no model fitted; gate D9 not signed"
+}

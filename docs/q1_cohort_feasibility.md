@@ -235,3 +235,28 @@ archive). Each member passed its CRC32 and size checks.
   reappeared.
 - The Q1 cohort outputs, outcome classes and failure dates are unchanged. No group
   breakdown was computed and no model was fitted.
+
+## 8. Unsealed per-group counts after D1 was recorded (2026-11-10)
+
+D1–D8 were committed and pushed in `e3cf5dd` (2026-11-10T20:59:57Z) **before** the
+sealed accounting was read. `scripts/unseal_q1_group_counts.py` then verified the
+accounting's hash and applied D1 mechanically (`docs/q1_group_counts.json`).
+
+**D1 result:** the SMART 197-nonzero group has **28** recorded failures. That meets
+the recorded minimum of 10, so **SMART 197 stays the baseline warning attribute**;
+SMART 5 is not used as the switch. These are descriptive counts under the primary
+classification (D2, D3 primary, D5); no rate, test or model was computed. Post-failure
+rows are 0 in every group. Each attribute's strata sum to the overall row.
+
+| Attribute | Baseline state | Included | Recorded failures | Censored Mar 31 | Unexplained exits | Gap drives |
+|---|---|---|---|---|---|---|
+| SMART 197 | zero | 18,371 | 83 | 18,195 | 93 | 1,850 |
+| SMART 197 | nonzero | 162 | **28** | 131 | 3 | 36 |
+| SMART 197 | missing | 0 | 0 | 0 | 0 | 0 |
+| SMART 5 | zero | 17,262 | 50 | 17,132 | 80 | 1,705 |
+| SMART 5 | nonzero | 1,271 | 61 | 1,194 | 16 | 181 |
+| SMART 5 | missing | 0 | 0 | 0 | 0 | 0 |
+| All | – | 18,533 | 111 | 18,326 | 96 | 1,886 |
+
+The exit and gap columns equal the outcome-blind figures already published in §3.
+D9 is not signed, so the gate stays **BLOCKED** and no KM, Cox or other model was fitted.

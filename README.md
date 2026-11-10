@@ -84,3 +84,12 @@ per-member CRC verification) found that 93 of the 96 Q1 unexplained exits reappe
 That includes all 88 drives last seen Mar 28–30. 3 January exits remain unresolved.
 See [`docs/q1_exit_linkage.md`](docs/q1_exit_linkage.md). The Q1 cohort is unchanged
 and no model was fitted.
+
+## Q1 decisions D1–D8 and unsealed group counts (2026-11-10)
+
+D1–D8 were recorded first, in `docs/q1_decision_record.md` and `docs/q1_decisions.json`;
+they were selected by Claude at the owner's request and are pending group review.
+The sealed counts were read only after that commit. Under D1 (≥ 10 events), the
+SMART 197-nonzero group has 28 recorded failures, so SMART 197 is kept. See
+`docs/q1_group_counts.json` and §8 of `docs/q1_cohort_feasibility.md`. The gate (D9)
+is not signed and no model has been fitted.

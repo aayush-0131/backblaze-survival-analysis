@@ -220,3 +220,10 @@ are a later, separate request. The skeleton does not link them yet.
 - Owner confirmed both downloads were authorised.
 - All remaining unblock items are decisions, now collected with options in
   [`q1_decision_record.md`](q1_decision_record.md) (D1–D9, all blank).
+
+## 11. Status (2026-11-10)
+
+- [x] Event-support rule recorded before reading group counts (D1, `e3cf5dd`); applied: SMART 197 kept (28 events in the nonzero group).
+- [x] A6–A8, return-day failure timing, terminal-first-flag and excluded failures recorded as D2–D7 (pending group review).
+- [ ] Joint review with the teammate SMART/literature audit.
+- [ ] Owner approval to lift the gate (D9). Not signed; no KM or Cox work started.

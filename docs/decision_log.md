@@ -137,3 +137,13 @@
   script refuses to run unless `q1_decisions.json` is committed and unmodified.
 - This entry is committed and pushed **before** the sealed accounting is read.
 - D9 is not signed. The gate stays **BLOCKED**; no model is fitted.
+
+## 2026-11-10 — sealed counts read after D1; D1 applied (PR #3)
+
+- After `e3cf5dd` (D1–D8 recorded, pushed 2026-11-10T20:59:57Z), ran
+  `scripts/unseal_q1_group_counts.py`. It verified the accounting hash
+  (`33cd2bd9…b6e2`) and the committed decision file, then applied D1.
+- SMART 197-nonzero: 28 recorded failures among 162 included drives, which is ≥ 10, so
+  **SMART 197 is kept**. Other groups: 197-zero 83 / 18,371; 5-nonzero 61 / 1,271;
+  5-zero 50 / 17,262. Descriptive counts only (`docs/q1_group_counts.json`).
+- D9 is not signed. The gate stays **BLOCKED**; no model was fitted.
