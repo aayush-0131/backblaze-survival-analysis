@@ -56,3 +56,140 @@
 - Managed range acquisition failed DNS. Scope reduction: completed local Q2 2023 and Q1 aggregate context; deferred Q1 serial linkage, bounded Q4 lookback/Q2 returns and full historical census.
 - Prefer validating single-model Seagate fixed-baseline Q1 calendar follow-up; keep 197 lead / 5 predeclared alternative. Choose neither based on observed effect size. Proposed 14-day linkage is an operational sensitivity horizon, not permanence proof.
 - Narrow design-approval gate: **BLOCKED** pending the missing acquisition/reconciliation. Original Q1 data gate stays READY WITH CONDITIONS. Joint review with the literature audit is required; no final hypothesis/cohort frozen and no modelling, push or merge performed.
+
+## 2026-11-01 — issue #2: minimal Q1 path and cohort-construction skeleton
+
+- Re-ran the baseline before editing: 14 tests passed; Q1 and history verifiers passed.
+- Managed range smoke check to `f001.backblazeb2.com` failed (`CONNECT tunnel failed, response 403`; environment network policy). No Q1 candidate rows exist locally. Gate stays **BLOCKED**; no KM/Cox or other estimator was run.
+- Added `backblaze_audit.cohort`: per-drive fixed-baseline records for one exact model (inclusion, baseline 197/5 state, first recorded failure vs administrative censoring vs unexplained exit, gap flags, post-failure counts) and reconciled accounting. Reuses `HistoryAudit` validation and existing `Source` readers. Tested only with invented fixtures.
+- Proposed (not adopted) conventions are listed as A6–A8 in `docs/q1_minimal_path.md`; they need owner/group decisions. Unexplained exits remain non-events. SMART 9 stays a powered-hours descriptor, not age.
+- Serial-level outputs default to the ignored `data/processed/q1_cohort/`. No raw data, result tables or prior artifacts were changed.
+
+## 2026-11-02 — Q1 retrieval and cohort-construction feasibility run (PR #3)
+
+- The owner authorised retrieval of the official Q1 2026 ZIP (about 1.3 GB) for cohort
+  construction and feasibility validation only.
+- The 32-byte smoke test to `f001.backblazeb2.com` now succeeds (HTTP 206, `PK` header).
+  Retrieved with Option A to the ignored `data/raw/`, not extracted.
+- Integrity: exact size, SHA1 equals the recorded large-file SHA1, 90/90 member CRC32 and
+  sizes match `data_manifest.json`, `testzip` passed. The builder's `--expect-manifest`
+  guard was active. Record: `docs/q1_retrieval_record.json`.
+- Ran the unchanged `build_cohort_skeleton.py`. Reconciled exactly with the Q1 audit
+  (18,650 drives / 1,664,558 drive-days / 129 failure flags). Outputs are deterministic
+  (byte-identical rerun).
+- **Sealing.** Following `q1_minimal_path.md` section 2 step 3, event counts by 197/5
+  baseline group were not read or reported. The builder's stdout went to the ignored
+  tree. `scripts/summarize_q1_cohort.py` publishes only outcome-blinded aggregates
+  (`docs/q1_cohort_feasibility_summary.json`) and re-verifies output hashes and
+  reconciliation.
+- No convention (A6–A8), censoring date, gap policy or event-support threshold was
+  chosen. New open item: timing of failures flagged on the first day back after a gap
+  (21 of 111 included failures).
+- Nothing was copied to `results/`. No KM, Cox or other estimator was run. No raw or
+  drive-level data was committed. PR #3 stays draft and unmerged.
+- The gate remains **BLOCKED**, now pending recorded decisions rather than missing data.
+
+## 2026-11-02 — bounded Apr 1–14 linkage of Q1 unexplained exits (PR #3)
+
+- The owner authorised retrieval of official Apr 1–14, 2026 daily files solely to
+  investigate the 96 Q1 unexplained exits.
+- Read the Q2 2026 ZIP central directory first. The 14 members are 316,484,017
+  compressed bytes (15.1% of 2,092,757,685), so the full archive was not required.
+  Read them by HTTP byte range with the repo-pinned `remotezip`; measured receive was
+  320,330,942 bytes. Nothing was written to `data/raw/`.
+- Integrity per member: 14/14 CRC32 verified on full decompression, sizes equal the
+  directory, complete calendar, row dates equal file dates, 0 duplicate keys. The
+  whole-archive SHA1 was not checked, because that would need the full download.
+- Reused the same-session Q1 outputs after re-verifying their hashes. Matching is by
+  serial across all model labels.
+- Result: 93/96 reappeared (88/88 near-end, 5/8 earlier). 3 January exits were not
+  observed through Apr 14; their status is unresolved, not retired or failed.
+  4 reappeared drives carry an April failure flag, which is descriptive only and not
+  a Q1 event.
+- No change to cohort definition, baseline, censoring policy or failure dates. No
+  SMART-group breakdown, no unsealing, no model fitted. Whether and how to use the
+  linkage stays an owner/group decision (A6/A7).
+
+## 2026-11-10 — owner confirmation of downloads; decision form opened (PR #3)
+
+- Aayush confirmed in chat that both downloads made by the other session were
+  authorised: the full Q1 2026 ZIP and the bounded Apr 1–14 2026 daily members.
+- Opened `docs/q1_decision_record.md`, which collects the open decisions (D1–D9:
+  event-support rule, A6–A8, gap-return timing, terminal-first-flag, excluded
+  failures, presentation, gate) with options only. Every decision is blank; none
+  was taken. The gate remains **BLOCKED**. No data was read, no counts were
+  unsealed and no model was fitted.
+
+## 2026-11-10 — D1–D8 recorded before unsealing (PR #3)
+
+- Aayush: "go ahead with D1–D8 as proposed". The choices are the proposal of
+  2026-11-10T20:53Z, now written into `docs/q1_decision_record.md` and
+  `docs/q1_decisions.json`, labelled "selected by Claude at Aayush's request, pending
+  group review".
+- D1: keep SMART 197 if its nonzero group has ≥ 10 recorded Q1 failures, else switch
+  to SMART 5 (no minimum for 5). D2 censor at Mar 31. D3 exits censored at last
+  observed day, linkage as sensitivity (93 reappeared censored at Mar 31), 3 January
+  exits at last seen, 4 April flags as a limitation. D4 at risk through gaps, gap-day
+  exclusion as sensitivity. D5 flag date is the event date. D6 first flag terminal.
+  D7 exclusions kept and reported. D8 label the expected-failures figure; state the
+  110-drive overlap.
+- The D1 threshold is also fixed in code (`backblaze_audit.decisions`). The unseal
+  script refuses to run unless `q1_decisions.json` is committed and unmodified.
+- This entry is committed and pushed **before** the sealed accounting is read.
+- D9 is not signed. The gate stays **BLOCKED**; no model is fitted.
+
+## 2026-11-10 — sealed counts read after D1; D1 applied (PR #3)
+
+- After `e3cf5dd` (D1–D8 recorded, pushed 2026-11-10T20:59:57Z), ran
+  `scripts/unseal_q1_group_counts.py`. It verified the accounting hash
+  (`33cd2bd9…b6e2`) and the committed decision file, then applied D1.
+- SMART 197-nonzero: 28 recorded failures among 162 included drives, which is ≥ 10, so
+  **SMART 197 is kept**. Other groups: 197-zero 83 / 18,371; 5-nonzero 61 / 1,271;
+  5-zero 50 / 17,262. Descriptive counts only (`docs/q1_group_counts.json`).
+- D9 is not signed. The gate stays **BLOCKED**; no model was fitted.
+
+## 2026-11-10 — owner signs D1–D9; analysis plan pre-specified (PR #3)
+
+- Aayush: "Go ahead. I sign D9 and others". D1–D8 are now signed by the owner, and
+  D9 is signed, which lifts the gate for the plan in `docs/q1_analysis_plan.md`.
+- D9's prerequisite, a joint review with the teammate SMART/literature audit, is not
+  documented in the repository, and no such audit exists on any branch. The owner
+  signed regardless; this is carried as a limitation.
+- The plan covers:
+  - KM by baseline SMART 197 group, plus one Cox model with a single binary
+    covariate (Efron ties), with a PH check;
+  - sensitivities S1 (linkage: reappeared exits censored at Mar 31) and S2 (gap
+    days removed via start/stop intervals);
+  - lifelines as the engine, with a statsmodels cross-check.
+- The plan is committed **before** any model is fitted.
+
+## 2026-11-10 — pre-specified survival analysis run (PR #3)
+
+- Ran `scripts/fit_q1_survival.py` under signed D9 and the plan committed in `2b91f38`.
+  Inputs were hash-verified, and the gap episodes were re-derived with byte-for-byte
+  reproduction of `cohort_drives.csv`.
+- Primary: KM S(89) is 0.9955 for 197 = 0 and 0.8262 for 197 > 0. Cox HR 43.2
+  (95% CI 28.1–66.3). The PH test rejects proportionality (p = 0.0069): the excess
+  hazard is concentrated early. S1 gives HR 43.2 and S2 gives HR 44.1.
+- Numerical and reporting deviations, recorded in `docs/q1_survival_results.md` §3:
+  - damped optimisers, because undamped Newton diverged;
+  - a half-day entry shift in the statsmodels cross-check, to match the plan's
+    strict risk set;
+  - KM at-risk counts computed directly;
+  - no PH test for S2.
+
+  None of these changes the model.
+- Refactor: `run_cohort` now delegates its streaming loop to `stream_cohort`. Its
+  outputs are byte-identical, as the analysis rerun verified.
+
+## 2026-11-11 — group approval, write-up and merge of PR #3
+
+- Aayush stated in chat that he and his teammates approved the decisions (D1–D9),
+  the pre-specified plan and the results, and asked for the write-up and the merge
+  of PR #3 into `work/backblaze-history-audit`.
+- Added `docs/q1_report.md`, the project write-up, built only from committed
+  artifacts. Its central caveat: Backblaze counts proactive, SMART-informed
+  removals as failures, so the SMART 197 association is partly expected by
+  construction. That is cited from Backblaze Drive Stats posts via search results;
+  the pages could not be opened from the session.
+- No new analysis, model or number was added.

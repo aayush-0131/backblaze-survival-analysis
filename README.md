@@ -55,3 +55,59 @@ counter integrity and boundary linkage cannot be reconstructed from aggregates.
 Nominal powered hours are supported by historical endpoints, not physical age.
 The summary provides exact local reproduction commands. No models were fitted,
 final hypotheses frozen or all-history corpus downloaded.
+
+## Minimal Q1 path and cohort skeleton (2026-11-01)
+
+[`docs/q1_minimal_path.md`](docs/q1_minimal_path.md) lists exactly which Q1
+candidate-level inputs are missing, a conditional minimal design, a checked
+assumptions table, the unblock checklist and the exact data request.
+`scripts/build_cohort_skeleton.py` builds per-drive fixed-baseline records
+(inclusion, first recorded failure vs non-failure exit, gap flags) once Q1 rows
+are available; it is tested only on synthetic fixtures. The Q1 design gate
+remains **BLOCKED** and no survival model has been fitted.
+
+## Q1 cohort feasibility run (2026-11-02)
+
+The official Q1 ZIP was retrieved with owner authorisation. It passed SHA1, all 90
+member CRC32 and size checks, and a full CRC test. The unchanged builder then ran
+on `ST12000NM0008` and reconciled exactly with the Q1 audit: 18,650 drives,
+1,664,558 drive-days, 129 failure flags. The fixed Jan 1 cohort has 18,533 included
+drives. See [`docs/q1_cohort_feasibility.md`](docs/q1_cohort_feasibility.md).
+Event counts by baseline 197/5 group are **sealed** until the group records its
+event-support rule. The design gate remains **BLOCKED** pending decisions, and no
+survival model has been fitted.
+
+## Q1 exit linkage, Apr 1–14 (2026-11-02)
+
+A bounded byte-range read of 14 April daily files (about 316 MB of the Q2 ZIP, with
+per-member CRC verification) found that 93 of the 96 Q1 unexplained exits reappear.
+That includes all 88 drives last seen Mar 28–30. 3 January exits remain unresolved.
+See [`docs/q1_exit_linkage.md`](docs/q1_exit_linkage.md). The Q1 cohort is unchanged
+and no model was fitted.
+
+## Q1 decisions D1–D8 and unsealed group counts (2026-11-10)
+
+D1–D8 were recorded first, in `docs/q1_decision_record.md` and `docs/q1_decisions.json`;
+they were selected by Claude at the owner's request and are pending group review.
+The sealed counts were read only after that commit. Under D1 (≥ 10 events), the
+SMART 197-nonzero group has 28 recorded failures, so SMART 197 is kept. See
+`docs/q1_group_counts.json` and §8 of `docs/q1_cohort_feasibility.md`. The gate (D9)
+is not signed and no model has been fitted.
+
+## Q1 survival analysis (2026-11-10)
+
+The owner signed D9, which lifted the gate for the plan in `docs/q1_analysis_plan.md`
+(committed before fitting). Baseline SMART 197 > 0 (162 drives, 28 failures) against
+197 = 0 (18,371 drives, 83 failures):
+
+- KM survival to Mar 31 is 0.826 versus 0.9955.
+- Cox HR is 43.2 (95% CI 28.1–66.3), but proportional hazards is rejected
+  (p = 0.007), because the excess hazard is concentrated early.
+- The sensitivity analyses for exits (S1) and gaps (S2) agree.
+
+Results and limitations are in `docs/q1_survival_results.md`, and outputs in
+`results/survival/`. Reproduce with `scripts/fit_q1_survival.py --check`.
+
+## Q1 2026 write-up (2026-11-11)
+
+The project report is [`docs/q1_report.md`](docs/q1_report.md): baseline SMART 197 and recorded failure in ST12000NM0008, with the pre-specified Kaplan–Meier and Cox results, sensitivity analyses and limitations.

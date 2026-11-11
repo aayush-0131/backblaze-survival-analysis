@@ -1,0 +1,344 @@
+{
+  "analyses": {
+    "P": "primary (D2, D3 primary, D4 primary, D5, D6)",
+    "S1": "D3 sensitivity: 93 linkage-verified exits censored at day 89",
+    "S2": "D4 sensitivity: gap days removed via start/stop intervals"
+  },
+  "baseline": "2026-01-01",
+  "excluded_by_design": {
+    "failure_on_baseline_date": 1,
+    "later_arrival_failures": 17,
+    "later_arrivals": 116
+  },
+  "exposure": "baseline SMART 197 raw nonzero vs zero (D1)",
+  "gate": "D9 signed by the owner (Aayush), 2026-11-10",
+  "inputs": {
+    "cohort_drives_sha256": "beccd1a11d250d1c5738a36e161827d1abdb4bf425ecaa020c545f9851e2d552",
+    "gap_episodes_rederived_and_cohort_reproduced": true,
+    "linkage_sha256": "31d4ee9bb99c196ebd7f45df4f936ac6d0a943d85c09e992b9628e1b66e011c8"
+  },
+  "model": "ST12000NM0008",
+  "not_done": "no log-rank test, SMART 5 model, covariate adjustment, interaction or model selection",
+  "plan": "docs/q1_analysis_plan.md",
+  "plan_and_decisions_first_committed": {
+    "docs/q1_analysis_plan.md": {
+      "commit": "2b91f38119b7183e512d93a3427cd953e07464a7",
+      "committed_at": "2026-11-10T21:05:10+00:00"
+    },
+    "docs/q1_decisions.json": {
+      "commit": "e3cf5dd910e78a25bd7662022b26bf449b9f5c38",
+      "committed_at": "2026-11-10T20:59:57+00:00"
+    }
+  },
+  "results": {
+    "P": {
+      "cox": {
+        "coef": 3.76535572,
+        "covariate": "baseline SMART 197 raw nonzero (1) vs zero (0)",
+        "cross_check": {
+          "abs_coef_difference": 9.47e-09,
+          "coef": 3.76535571,
+          "engine": "statsmodels 0.15.0 PHReg (efron), BFGS from 0",
+          "score_at_solution": -6.06e-11,
+          "se": 0.21860672,
+          "tolerance": 1e-06
+        },
+        "hazard_ratio": 43.179063,
+        "hr_ci95": [
+          28.131626,
+          66.275283
+        ],
+        "numerical_settings": {
+          "lifelines": {
+            "max_steps": 500,
+            "precision": 1e-10,
+            "step_size": 0.1
+          },
+          "reason": "undamped Newton from 0 overflows (rare exposure, strong effect); concave likelihood, so the maximum is unchanged",
+          "statsmodels": {
+            "disp": 0,
+            "gtol": 1e-10,
+            "maxiter": 1000,
+            "method": "bfgs"
+          }
+        },
+        "p_value": 1.74417e-66,
+        "ph_test": {
+          "method": "scaled Schoenfeld, rank time transform (lifelines proportional_hazard_test)",
+          "p_value": 0.00692236,
+          "statistic": 7.29300391
+        },
+        "se": 0.21860672,
+        "ties": "efron",
+        "z": 17.224336
+      },
+      "drives": 18533,
+      "events": 111,
+      "kaplan_meier": {
+        "smart_197_nonzero": {
+          "at_risk": {
+            "0": 162,
+            "30": 145,
+            "60": 139,
+            "89": 131
+          },
+          "drives": 162,
+          "events": 28,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.8430701526,
+              "ci_upper": 0.9379704287,
+              "estimate": 0.900726676
+            },
+            "60": {
+              "ci_lower": 0.8000696971,
+              "ci_upper": 0.9078911225,
+              "estimate": 0.8634552274
+            },
+            "89": {
+              "ci_lower": 0.7582826296,
+              "ci_upper": 0.8765530503,
+              "estimate": 0.8261837787
+            }
+          }
+        },
+        "smart_197_zero": {
+          "at_risk": {
+            "0": 18371,
+            "30": 18349,
+            "60": 18324,
+            "89": 18195
+          },
+          "drives": 18371,
+          "events": 83,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.998247116,
+              "ci_upper": 0.9992544491,
+              "estimate": 0.9988567577
+            },
+            "60": {
+              "ci_lower": 0.9967824431,
+              "ci_upper": 0.9982168356,
+              "estimate": 0.9976045799
+            },
+            "89": {
+              "ci_lower": 0.9943992538,
+              "ci_upper": 0.9963540662,
+              "estimate": 0.9954809187
+            }
+          }
+        }
+      },
+      "rows": 18533
+    },
+    "S1": {
+      "cox": {
+        "coef": 3.7653397,
+        "covariate": "baseline SMART 197 raw nonzero (1) vs zero (0)",
+        "cross_check": {
+          "abs_coef_difference": 9.47e-09,
+          "coef": 3.76533969,
+          "engine": "statsmodels 0.15.0 PHReg (efron), BFGS from 0",
+          "score_at_solution": -6.07e-11,
+          "se": 0.21860655,
+          "tolerance": 1e-06
+        },
+        "hazard_ratio": 43.178371,
+        "hr_ci95": [
+          28.131185,
+          66.274198
+        ],
+        "numerical_settings": {
+          "lifelines": {
+            "max_steps": 500,
+            "precision": 1e-10,
+            "step_size": 0.1
+          },
+          "reason": "undamped Newton from 0 overflows (rare exposure, strong effect); concave likelihood, so the maximum is unchanged",
+          "statsmodels": {
+            "disp": 0,
+            "gtol": 1e-10,
+            "maxiter": 1000,
+            "method": "bfgs"
+          }
+        },
+        "p_value": 1.74596e-66,
+        "ph_test": {
+          "method": "scaled Schoenfeld, rank time transform (lifelines proportional_hazard_test)",
+          "p_value": 0.00691239,
+          "statistic": 7.2955952
+        },
+        "se": 0.21860655,
+        "ties": "efron",
+        "z": 17.224277
+      },
+      "drives": 18533,
+      "events": 111,
+      "kaplan_meier": {
+        "smart_197_nonzero": {
+          "at_risk": {
+            "0": 162,
+            "30": 145,
+            "60": 139,
+            "89": 133
+          },
+          "drives": 162,
+          "events": 28,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.8430701526,
+              "ci_upper": 0.9379704287,
+              "estimate": 0.900726676
+            },
+            "60": {
+              "ci_lower": 0.8000696971,
+              "ci_upper": 0.9078911225,
+              "estimate": 0.8634552274
+            },
+            "89": {
+              "ci_lower": 0.7582826296,
+              "ci_upper": 0.8765530503,
+              "estimate": 0.8261837787
+            }
+          }
+        },
+        "smart_197_zero": {
+          "at_risk": {
+            "0": 18371,
+            "30": 18350,
+            "60": 18325,
+            "89": 18286
+          },
+          "drives": 18371,
+          "events": 83,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.9982471796,
+              "ci_upper": 0.9992544762,
+              "estimate": 0.9988567992
+            },
+            "60": {
+              "ci_lower": 0.9967825904,
+              "ci_upper": 0.9982169173,
+              "estimate": 0.9976046896
+            },
+            "89": {
+              "ci_lower": 0.9944000327,
+              "ci_upper": 0.9963545733,
+              "estimate": 0.9954815473
+            }
+          }
+        }
+      },
+      "rows": 18533
+    },
+    "S2": {
+      "cox": {
+        "coef": 3.78624645,
+        "covariate": "baseline SMART 197 raw nonzero (1) vs zero (0)",
+        "cross_check": {
+          "abs_coef_difference": 2.13e-10,
+          "coef": 3.78624645,
+          "engine": "statsmodels 0.15.0 PHReg (efron), BFGS from 0",
+          "score_at_solution": 6.11e-15,
+          "se": 0.21864006,
+          "tolerance": 1e-06
+        },
+        "hazard_ratio": 44.090593,
+        "hr_ci95": [
+          28.723621,
+          67.678808
+        ],
+        "numerical_settings": {
+          "lifelines": {
+            "max_steps": 500,
+            "precision": 1e-10,
+            "step_size": 0.1
+          },
+          "reason": "undamped Newton from 0 overflows (rare exposure, strong effect); concave likelihood, so the maximum is unchanged",
+          "statsmodels": {
+            "disp": 0,
+            "gtol": 1e-10,
+            "maxiter": 1000,
+            "method": "bfgs"
+          }
+        },
+        "p_value": 3.48573e-67,
+        "ph_test": "not available for start/stop fits in lifelines 0.30.0; not computed",
+        "se": 0.21864006,
+        "ties": "efron",
+        "z": 17.317258
+      },
+      "drives": 18533,
+      "events": 111,
+      "kaplan_meier": {
+        "smart_197_nonzero": {
+          "at_risk": {
+            "0": 162,
+            "30": 143,
+            "60": 133,
+            "89": 131
+          },
+          "drives": 162,
+          "events": 28,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.8418462643,
+              "ci_upper": 0.9374563147,
+              "estimate": 0.8999231636
+            },
+            "60": {
+              "ci_lower": 0.7980343597,
+              "ci_upper": 0.9069031613,
+              "estimate": 0.8620184485
+            },
+            "89": {
+              "ci_lower": 0.7546327772,
+              "ci_upper": 0.8745944221,
+              "estimate": 0.8234737309
+            }
+          }
+        },
+        "smart_197_zero": {
+          "at_risk": {
+            "0": 18371,
+            "30": 18311,
+            "60": 18254,
+            "89": 18195
+          },
+          "drives": 18371,
+          "events": 83,
+          "survival_at": {
+            "30": {
+              "ci_lower": 0.9982412814,
+              "ci_upper": 0.9992519677,
+              "estimate": 0.9988529522
+            },
+            "60": {
+              "ci_lower": 0.9967729307,
+              "ci_upper": 0.9982115614,
+              "estimate": 0.9975974961
+            },
+            "89": {
+              "ci_lower": 0.99437902,
+              "ci_upper": 0.996340887,
+              "estimate": 0.9954645872
+            }
+          }
+        }
+      },
+      "rows": 20894
+    }
+  },
+  "software": {
+    "lifelines": "0.30.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  },
+  "time_scale": "calendar days since baseline",
+  "window_end": "2026-03-31"
+}
