@@ -1,0 +1,9 @@
+model,window,q1_unique_drives,q1_failures,additional_drives,additional_events,verdict,rationale,compute_storage
+ST12000NM0008,Q1 only,18650,129,,,BLOCKED,Aggregate coverage available; Jan1 warning/event-by-state/gap counts unresolved,90 daily members; existing ZIP 1.313 GB compressed
+ST12000NM0008,Q1 + last 14 Q4 days,18650,129,,,BLOCKED,Supports prespecified prior-state sensitivity; serial linkage missing,104 daily members; Q4 ZIP approximately 1.2 GB but selective range access preferred
+ST12000NM0008,Q1 + last 14 Q4 days + first 14 Q2 days,18650,129,,,BLOCKED,Preferred bounded acquisition plan; boundary return counts unknown,118 daily members; Q2 ZIP approximately 2.1 GB but only 14 members needed
+ST12000NM0008,Longer historical follow-up,18650,129,,,REVISE,Full unique-drive/event census not measured; no demonstrated need to enlarge analysis window,Several quarterly archives; sequential scans; no bulk extraction
+WDC WUH722222ALE6L4,Q1 only,45638,42,,,BLOCKED,Aggregate coverage available; Jan1 warning/event-by-state/gap counts unresolved,90 daily members; existing ZIP 1.313 GB compressed
+WDC WUH722222ALE6L4,Q1 + last 14 Q4 days,45638,42,,,BLOCKED,Supports prespecified prior-state sensitivity; serial linkage missing,104 daily members; Q4 ZIP approximately 1.2 GB but selective range access preferred
+WDC WUH722222ALE6L4,Q1 + last 14 Q4 days + first 14 Q2 days,45638,42,,,BLOCKED,Preferred bounded acquisition plan; boundary return counts unknown,118 daily members; Q2 ZIP approximately 2.1 GB but only 14 members needed
+WDC WUH722222ALE6L4,Longer historical follow-up,45638,42,,,REVISE,Full unique-drive/event census not measured; no demonstrated need to enlarge analysis window,Several quarterly archives; sequential scans; no bulk extraction

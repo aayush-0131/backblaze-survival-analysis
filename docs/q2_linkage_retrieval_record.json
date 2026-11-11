@@ -1,0 +1,57 @@
+{
+  "purpose": "Bounded retrieval of official Backblaze daily files 2026-04-01..14 to investigate the 96 Q1 2026 ST12000NM0008 unexplained exits",
+  "source": {
+    "url": "https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_Q2_2026.zip",
+    "official_download_page": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+    "head_content_length": 2092757685,
+    "head_accept_ranges": "bytes",
+    "head_x_bz_file_id": "4_zefbb636e885eab02543a061a_f2113b6c006d9cbf4_d20260901_m213419_c001_v0001174_t0029_u01788298459972",
+    "head_x_bz_info_large_file_sha1": "c31947a4bd1af87e15ff127198e121522cc54991",
+    "whole_archive_sha1_verified": false,
+    "whole_archive_sha1_note": "Not verifiable without downloading the full 2.09 GB archive, which was not needed. Integrity is established per member (below)."
+  },
+  "transfer_estimate_before_retrieval": {
+    "method": "ZIP central directory read through HTTP byte ranges (remotezip 0.12.3, repo-pinned)",
+    "zip_entries": 92,
+    "daily_csv_members": 91,
+    "selected_members": 14,
+    "selected_compressed_bytes": 316484017,
+    "selected_share_of_archive_percent": 15.12,
+    "selected_uncompressed_bytes": 1905991161,
+    "full_archive_required": false
+  },
+  "retrieval": {
+    "command": "PYTHONPATH=src python scripts/link_q1_exits.py --remote-url https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_Q2_2026.zip",
+    "method": "HTTP byte ranges per ZIP member; streamed and decompressed in memory; nothing written to data/raw",
+    "started_utc": "2026-11-02T08:29:25Z",
+    "finished_utc": "2026-11-02T08:30:15Z",
+    "exit_status": 0,
+    "stderr_bytes": 0,
+    "measured_eth0_received_bytes": 320330942,
+    "measurement_note": "Interface receive counter delta over the run; includes TLS/HTTP overhead and the central-directory reads"
+  },
+  "integrity": {
+    "member_crc32_verified_on_full_decompression": "14 of 14 (Python zipfile raises on mismatch at end of stream)",
+    "decompressed_bytes_equal_directory_size": "14 of 14",
+    "member_crc32_and_compressed_size_equal_pre_retrieval_directory_read": "14 of 14",
+    "per_member_sha256_of_decompressed_stream": "recorded in docs/q1_exit_linkage_summary.json member_evidence",
+    "calendar": "2026-04-01..2026-04-14 complete, 14 distinct dates",
+    "row_date_equals_filename_date": "all rows of all 14 members",
+    "duplicate_serial_keys_per_day": 0,
+    "core_columns_present": true,
+    "verdict": "PASS (per-member); whole-archive SHA1 not checked"
+  },
+  "q1_inputs": {
+    "q1_cohort_outputs_reused": "data/processed/q1_cohort; hashes re-verified against cohort_manifest.json before and after the run",
+    "cohort_drives_csv_sha256": "beccd1a11d250d1c5738a36e161827d1abdb4bf425ecaa020c545f9851e2d552",
+    "sealed_cohort_accounting_csv": "hashed for integrity only; contents not parsed or displayed"
+  },
+  "environment": {
+    "python": "3.13.18",
+    "pandas": "3.0.5",
+    "numpy": "2.5.3",
+    "remotezip": "0.12.3",
+    "pytest": "8.4.2"
+  },
+  "retention": "Serial-level linkage records in Git-ignored data/processed/q1_exit_linkage/; never committed"
+}

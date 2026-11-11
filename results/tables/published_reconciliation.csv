@@ -1,0 +1,5 @@
+measure,audit_value,official_report_value,status,notes
+raw_end_drive_count,345662,345662,PASS,All raw daily rows; not the report's analyzed subset.
+failure_rows,1030,1030,PASS,Exact reconciliation.
+raw_all_drive_days,30597484,30203180,EXPLAINED DIFFERENCE,Audit retains all line-item rows; published report excludes boot drives and models below its reporting criteria.
+analyzed_end_drive_count,,341263,NOT REPRODUCED,Official exclusion logic was not imposed because this data gate audits all published line-item rows.

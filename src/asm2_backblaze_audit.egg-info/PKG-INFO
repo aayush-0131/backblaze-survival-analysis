@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: asm2-backblaze-audit
+Version: 0.1.0
+Summary: Memory-conscious data-feasibility audit for Backblaze Drive Stats
+Requires-Python: >=3.11
+Requires-Dist: numpy<3,>=1.26
+Requires-Dist: pandas<3.1,>=2.2
+Requires-Dist: remotezip==0.12.3
+Provides-Extra: test
+Requires-Dist: pytest<9,>=8; extra == "test"
+Provides-Extra: analysis
+Requires-Dist: lifelines==0.30.0; extra == "analysis"
+Requires-Dist: statsmodels==0.15.0; extra == "analysis"
+Requires-Dist: matplotlib==3.11.2; extra == "analysis"

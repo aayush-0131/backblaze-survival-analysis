@@ -1,0 +1,8 @@
+numpy>=1.26,<3
+pandas>=2.2,<3.1
+remotezip==0.12.3
+pytest>=8,<9
+# Survival analysis (docs/q1_analysis_plan.md)
+lifelines==0.30.0
+statsmodels==0.15.0
+matplotlib==3.11.2

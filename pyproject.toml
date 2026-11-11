@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asm2-backblaze-audit"
+version = "0.1.0"
+description = "Memory-conscious data-feasibility audit for Backblaze Drive Stats"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "pandas>=2.2,<3.1",
+  "remotezip==0.12.3",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9"]
+analysis = ["lifelines==0.30.0", "statsmodels==0.15.0", "matplotlib==3.11.2"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

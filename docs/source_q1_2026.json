@@ -1,0 +1,22 @@
+{
+  "official_download_page": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+  "download_url": "https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_Q1_2026.zip",
+  "access_date": "2026-09-29",
+  "quarter": "Q1 2026",
+  "content_length_bytes": 1312921361,
+  "published_compressed_size": "1.3 GB",
+  "published_extracted_size": "12.02 GB",
+  "published_entry_count": 91,
+  "daily_csv_count_expected": 90,
+  "http_accept_ranges": "bytes",
+  "x_bz_file_id": "4_zefbb636e885eab02543a061a_f219a81f7d5e71902_d20260708_m185146_c001_v0001097_t0040_u01783536706950",
+  "x_bz_large_file_sha1": "23448d5733a4762a9cf1d5e341fc240c2d10b13c",
+  "hash_scope": "Backblaze x-bz-info-large_file_sha1 response header for the complete ZIP; the archive was not locally downloaded because only about 2.1 GiB was free.",
+  "access_method": "HTTP byte-range reads of individual ZIP members; no full archive or expanded copy retained",
+  "official_q1_report_url": "https://www.backblaze.com/blog/backblaze-drive-stats-for-q1-2026/",
+  "official_q1_report_published_date": "2026-07-09",
+  "official_q1_report_raw_end_drive_count": 345662,
+  "official_q1_report_analyzed_drive_count": 341263,
+  "official_q1_report_included_drive_days": 30203180,
+  "official_q1_report_failures": 1030
+}

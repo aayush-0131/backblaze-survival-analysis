@@ -1,0 +1,217 @@
+{
+  "baseline": "2026-01-01",
+  "baseline_descriptors_included": {
+    "distinct_baseline_capacity_bytes": [
+      12000138625024
+    ],
+    "invalid_baseline_capacity": 0,
+    "smart9_review_flag_drives": 2,
+    "smart_9_raw_missing": 0
+  },
+  "baseline_state_groups": {
+    "by_attribute": {
+      "smart_197_raw": {
+        "missing": {
+          "included": 0,
+          "intermittent_gap_drives": 0,
+          "missing_days_in_gaps": 0,
+          "unexplained_exit": 0
+        },
+        "nonzero": {
+          "included": 162,
+          "intermittent_gap_drives": 36,
+          "missing_days_in_gaps": 309,
+          "unexplained_exit": 3
+        },
+        "zero": {
+          "included": 18371,
+          "intermittent_gap_drives": 1850,
+          "missing_days_in_gaps": 5793,
+          "unexplained_exit": 93
+        }
+      },
+      "smart_5_raw": {
+        "missing": {
+          "included": 0,
+          "intermittent_gap_drives": 0,
+          "missing_days_in_gaps": 0,
+          "unexplained_exit": 0
+        },
+        "nonzero": {
+          "included": 1271,
+          "intermittent_gap_drives": 181,
+          "missing_days_in_gaps": 1390,
+          "unexplained_exit": 16
+        },
+        "zero": {
+          "included": 17262,
+          "intermittent_gap_drives": 1705,
+          "missing_days_in_gaps": 4712,
+          "unexplained_exit": 80
+        }
+      }
+    },
+    "open_fields": [
+      "included",
+      "unexplained_exit",
+      "intermittent_gap_drives",
+      "missing_days_in_gaps"
+    ],
+    "sealed_fields": [
+      "recorded_failure",
+      "administrative_censoring",
+      "followup_days",
+      "post_failure_row_drives",
+      "gap_before_first_failure"
+    ],
+    "sealed_reason": "Event counts by baseline group are withheld until the group records a minimum event-support rule (D1, docs/q1_decisions.json). They exist only in the Git-ignored data/processed/q1_cohort/cohort_accounting.csv.",
+    "smart_197_by_smart_5_included": {
+      "nonzero": {
+        "nonzero": 110,
+        "zero": 52
+      },
+      "zero": {
+        "nonzero": 1161,
+        "zero": 17210
+      }
+    }
+  },
+  "boundary_linkage": "not_attempted",
+  "builder_output_sha256": {
+    "cohort_accounting.csv": "33cd2bd92e48104ce34bbed2c4e787fa4f7478f2e97344d2b5006d94bda1b6e2",
+    "cohort_drives.csv": "beccd1a11d250d1c5738a36e161827d1abdb4bf425ecaa020c545f9851e2d552"
+  },
+  "calendar": {
+    "candidate_rows_max_per_day": 18604,
+    "candidate_rows_min_per_day": 18291,
+    "contiguous": true,
+    "crc32_checked_against_recorded_manifest": true,
+    "daily_members": 90,
+    "first": "2026-01-01",
+    "last": "2026-03-31"
+  },
+  "failure_flags_all_drives": {
+    "by_inclusion": {
+      "excluded_failure_on_or_before_baseline": 1,
+      "excluded_later_arrival": 17,
+      "included": 111
+    },
+    "drives_with_failure_flag": 129,
+    "post_failure_rows": 0,
+    "repeated_failure_flag_drives": 0
+  },
+  "included_overall": {
+    "administrative_censoring": 18326,
+    "included": 18533,
+    "included_drive_days": 1656525,
+    "recorded_failure": 111,
+    "recorded_failure_by_month": {
+      "2026-01": 37,
+      "2026-02": 29,
+      "2026-03": 45
+    },
+    "recorded_failures_with_gap_after_first_failure": 0,
+    "recorded_failures_with_gap_before_first_failure": 44,
+    "unexplained_exit": 96
+  },
+  "inclusion": {
+    "drives_observed": 18650,
+    "excluded_failure_on_or_before_baseline": 1,
+    "excluded_later_arrival": 116,
+    "included": 18533,
+    "later_arrival_first_observed_by_month": {
+      "2026-01": 112,
+      "2026-02": 1,
+      "2026-03": 3
+    }
+  },
+  "model": "ST12000NM0008",
+  "models_fitted": "none",
+  "observation_gaps_included": {
+    "drives_with_gap": 1886,
+    "episodes_per_drive": {
+      "0": 16647,
+      "1": 1421,
+      "2": 356,
+      "3": 105,
+      "4": 3,
+      "5": 1
+    },
+    "gap_episodes": 2465,
+    "longest_gap_days_among_gap_drives": {
+      "1": 935,
+      "10": 2,
+      "11": 1,
+      "12": 1,
+      "14": 1,
+      "15": 3,
+      "16": 1,
+      "17": 1,
+      "18": 1,
+      "19": 3,
+      "2": 307,
+      "20": 1,
+      "21": 3,
+      "22": 4,
+      "23": 4,
+      "24": 3,
+      "25": 1,
+      "26": 1,
+      "28": 4,
+      "29": 2,
+      "3": 139,
+      "38": 1,
+      "4": 265,
+      "5": 121,
+      "6": 19,
+      "7": 2,
+      "8": 6,
+      "9": 54
+    },
+    "missing_days_in_gaps": 6102
+  },
+  "reconciliation_with_recorded_q1_audit": {
+    "matches": true,
+    "observed": {
+      "drive_days": 1664558,
+      "failure_rows": 129,
+      "unique_drives": 18650
+    },
+    "reference": {
+      "drive_days": 1664558,
+      "failure_rows": 129,
+      "source": "results/tables/model_inventory.csv (Q1 2026 data audit)",
+      "unique_drives": 18650
+    }
+  },
+  "time_scale": "calendar days from fixed baseline; SMART 9 is a descriptor, not age",
+  "unexplained_exits": {
+    "count": 96,
+    "days_unobserved_before_window_end": {
+      "1": 28,
+      "2": 29,
+      "3": 31,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "78": 1,
+      "81": 2,
+      "84": 1
+    },
+    "last_observed_by_date": {
+      "2026-01-06": 1,
+      "2026-01-09": 2,
+      "2026-01-12": 1,
+      "2026-03-24": 1,
+      "2026-03-25": 1,
+      "2026-03-26": 1,
+      "2026-03-27": 1,
+      "2026-03-28": 31,
+      "2026-03-29": 29,
+      "2026-03-30": 28
+    },
+    "with_any_gap_episode": 11
+  },
+  "window_end": "2026-03-31"
+}

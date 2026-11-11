@@ -1,0 +1,13 @@
+check,value,status,notes
+daily_csv_files,90,PASS,Q1 2026 has 90 calendar days; ZIP also contains one directory entry.
+date_range,2026-01-01 to 2026-03-31,PASS,missing=[]; extra=[]
+drive_day_key_duplicates,0,PASS,"Duplicate (date, serial_number) rows."
+invalid_date_rows,0,PASS,Dates unparseable by pandas.
+filename_date_mismatch_rows,0,PASS,CSV date does not match daily filename.
+invalid_failure_rows,0,PASS,missing_failure=0; allowed values are 0/1.
+multiple_failure_drives,0,PASS,Unique serials with more than one failure==1 row.
+post_failure_observed_drives,0,PASS,Drive observed on a date after its first failure row.
+nonfailure_disappearances,4427,REVIEW,Not relabeled as failure; exit mechanism is unknown.
+disappear_then_reappear_drives,17043,REVIEW,At least one gap of one or more missing daily snapshots followed by reappearance.
+invalid_capacity_rows,0,PASS,"Missing, zero, or negative capacity."
+schema_variants_within_quarter,1,PASS,Number of distinct daily CSV headers.

@@ -1,0 +1,5 @@
+model,evidence_scope,unique_drives,drive_days,failure_rows,unique_failed_drives,earliest_observed_backblaze_date,latest_observed_date,earliest_failure,latest_failure,historical_census_complete,q1_linkage_complete,q1_linked_drives,q1_traced_pre_entry,drives_with_repeated_observations,smart9_anomalous_drives,inconsistent_capacity_drives,invalid_capacity_rows,post_failure_drives,post_failure_rows,repeated_failure_drives,published_q1_lifetime_failure_rows,published_q1_lifetime_drive_days,lifetime_counts_source
+ST12000NM0008,observed_daily_files_only,19830,1763868,157,157,2023-04-01,2023-06-30,2023-04-02,2023-06-30,False,False,0,0,19828,180,52,52,2,10,0,,,
+WDC WUH722222ALE6L4,observed_daily_files_only,4,328,0,0,2023-04-08,2023-06-30,,,False,False,0,0,4,0,0,0,0,0,0,,,
+ST12000NM0008,q1_2026_verified_aggregate_only,18650,1664558,129,129,2026-01-01,2026-03-31,,,False,False,,,,,,,,,,2466,43012820,"Official Q1 report; reporting subset, not independently reproduced"
+WDC WUH722222ALE6L4,q1_2026_verified_aggregate_only,45638,3992942,42,42,2026-01-01,2026-03-31,,,False,False,,,,,,,,,,360,22472050,"Official Q1 report; reporting subset, not independently reproduced"
