@@ -111,3 +111,12 @@ Results and limitations are in `docs/q1_survival_results.md`, and outputs in
 ## Q1 2026 write-up (2026-11-11)
 
 The project report is [`docs/q1_report.md`](docs/q1_report.md): baseline SMART 197 and recorded failure in ST12000NM0008, with the pre-specified Kaplan–Meier and Cox results, sensitivity analyses and limitations.
+
+## Course deliverables (2026-11-11)
+
+- Report: [`report/ASM2_Group_Project_Report.pdf`](report/ASM2_Group_Project_Report.pdf)
+  (source: `docs/q1_report.md`)
+- Slides: [`report/ASM2_Group_Project_Slides.pptx`](report/ASM2_Group_Project_Slides.pptx)
+  and a PDF copy, with speaker notes. Rebuild with `python report/build_slides.py`.
+- Age-adjusted secondary model: `docs/q1_age_adjusted_plan.md` (committed before
+  fitting) and `docs/q1_age_adjusted_results.md`.
