@@ -1,192 +1,313 @@
-# Baseline SMART 197 status and recorded drive failure: a Q1 2026 cohort study of Seagate ST12000NM0008
+---
+title: "Does a Pending-Sector Warning Predict Hard-Drive Failure? A Survival Analysis of Backblaze Drive Stats, Q1 2026"
+subtitle: "Advanced Statistical Methods II — Group Project (Type I)"
+author: "Aayush Jha · Ankit Roy · Faaz Noushad"
+date: "November 2026"
+---
 
-ASM-II Type I project write-up, 2026-11-11. The decisions (D1–D9), the
-pre-specified plan and these results were approved by Aayush and teammates on
-2026-11-10/11. Every number below comes from committed artifacts:
-`docs/q1_group_counts.json`, `results/survival/cox_summary.json`,
-`results/survival/km_estimates.csv` and `docs/q1_survival_results.md`.
+**Course:** Advanced Statistical Methods II, Indian Statistical Institute
+(instructor: Dr. Monitirtha Dey).
 
-## Summary
+## Abstract
 
-Among 18,533 Seagate ST12000NM0008 drives in service on 1 January 2026, the 162 drives
-with a nonzero SMART 197 (current pending sector count) on that day had a much higher
-rate of a *recorded* failure over the next 89 days:
+We studied whether a SMART "pending sector" warning (SMART 197, Current Pending Sector
+Count) on a fixed day is associated with a later recorded hard-drive failure. We used a
+survival framework on Backblaze's public Drive Stats data.
 
-- **SMART 197 > 0:** 28 recorded failures. Survival to day 89 was 0.826 (95% CI 0.758–0.877).
-- **SMART 197 = 0:** 83 recorded failures among 18,371 drives. Survival was 0.9955 (0.9944–0.9964).
+- **Cohort:** 18,533 Seagate ST12000NM0008 drives in service on 1 January 2026,
+  followed by calendar day to 31 March 2026.
+- **Methods:** Kaplan–Meier curves by baseline SMART 197 status and a Cox
+  proportional-hazards model. Exits and observation gaps get pre-specified sensitivity
+  analyses, and a secondary model adjusts for powered-on age.
+- **Results:**
+  - Among the 162 drives with a nonzero baseline count, 28 had a recorded failure
+    within 89 days. The estimated proportion without a recorded failure was 0.826
+    (95% CI 0.758–0.877).
+  - Among the 18,371 drives with a zero count, it was 0.9955 (0.9944–0.9964), with 83
+    failures.
+  - The Cox hazard ratio was **43.2 (95% CI 28.1–66.3)**, so we reject the null
+    hypothesis of no association (Wald p ≈ 10⁻⁶⁶).
+- **Robustness:** the result holds when exits are reclassified (HR 43.2), when gap
+  days are removed (44.1), and when adjusting for powered-on years (43.6). Hazards
+  were not proportional: most of the excess risk came in the first month.
+- **Caveat:** Backblaze counts proactive replacements triggered by SMART indicators as
+  failures. The association is therefore partly built into the outcome. It should not
+  be read as a causal effect or as a validated prediction rule.
 
-The single-covariate Cox hazard ratio was **43.2 (95% CI 28.1–66.3)**. Both
-pre-specified sensitivity analyses left it essentially unchanged: 43.2 when
-unexplained exits were reclassified and 44.1 with gap days removed. Hazards were not
-proportional (p = 0.0069), and most of the excess came in the first 30 days, so the
-HR is a quarter-average. The result is a descriptive association. Backblaze counts
-proactive removals triggered by SMART indicators as failures, so it is partly
-expected by construction and must not be read as a causal or physical-failure effect.
+## 1. Introduction and hypotheses
 
-## 1. Question and design
+Hard drives report self-monitoring (SMART) attributes, and data centres use them to
+decide when to replace drives. SMART 197 counts sectors the drive could not read and
+has marked as "pending" for reallocation. Our question, as approved in our project
+proposal (6 October 2026), was:
 
-- **Question:** Is a nonzero SMART 197 on a fixed baseline day associated with a higher
-  hazard of a *recorded* Backblaze failure flag over the following quarter?
-- **Design:** prevalent fixed-baseline cohort, one drive model, calendar follow-up.
-  - Baseline is 2026-01-01 (day 0), and follow-up ends 2026-03-31 (day 89).
-  - Choosing one model avoids pooling capacities, firmware families and SMART
-    reporting conventions.
-- **Exposure:** SMART 197 raw > 0 versus = 0, taken from the baseline-day row only.
-  - The decision rule for using SMART 197 rather than SMART 5 (D1) was fixed and
-    committed before any per-group event count was read.
-- **Outcome:** the first `failure == 1` flag after baseline, dated on the flag date.
+> Is a pre-specified SMART health indicator associated with subsequent hard-drive
+> failure, after accounting for drive age?
+
+- **H₀:** the baseline SMART 197 status has no association with the subsequent
+  failure hazard.
+- **Hₐ:** the baseline SMART 197 status is associated with the subsequent failure
+  hazard.
+
+Survival analysis fits this question because drives are observed for different lengths
+of time. Many drives never fail in the window (right censoring), and some leave
+observation for reasons other than failure.
+
+## 2. Background
+
+- **SMART signals and failure.** Pinheiro, Weber and Barroso [6] studied more than
+  100,000 drives at Google.
+  - They found that a few SMART parameters "have a large impact on failure
+    probability", including probational (pending) counts.
+  - After the first probational count, drives were "16 times more likely to fail
+    within 60 days" than drives with none.
+  - They also found that over 56% of failed drives had no count in the four strongest
+    SMART signals, so SMART-only models are "unlikely to be useful for predicting
+    individual drive failures".
+- **How Backblaze defines failure.** In Drive Stats a drive is recorded as failed
+  when it is removed and replaced. That covers *reactive* failures, where the drive
+  dies or stops responding. It also covers *proactive* failures, where "indicators such
+  as SMART stats, FSCK checks, etc., signal that the drive is having difficulty and
+  drive failure is highly probable" [7].
+  - The public data records only a 0/1 failure flag, not its type [7].
+  - In Q3 2024, 721 of Backblaze's 1,361 failures (53%) were proactive [7].
+  - The Q3 2025 report describes failure monitoring through SMART attributes,
+    including `Current_Pending_Sector` [8].
+
+  This matters for interpretation (§7).
+
+## 3. Data
+
+**Source.** Backblaze Drive Stats, Q1 2026: 90 daily CSV files, 1 January to 31 March
+2026, 30.6 million drive-days in total [9]. The archive's SHA1 and every file's CRC32
+match the published values. No raw data is stored in the project repository.
+
+**Choice of drive model.** We restricted the study to one model, Seagate
+`ST12000NM0008` (12 TB), so that manufacturer and firmware differences don't confound
+the comparison. Q1 has 18,650 such drives and 129 failure flags.
+
+**Cohort construction.** Baseline is 1 January 2026 (day 0).
+
+- **Included:** drives present on that day.
+- **Excluded:** drives first seen later (116 drives, 17 of them with failures) and one
+  drive whose failure flag fell on the baseline day.
+
+That leaves **18,533 drives and 111 recorded failures**. Data checks:
+
+- There are no duplicate drive-day records, and no rows after a failure.
+- Baseline SMART 197, SMART 5 and SMART 9 were present for every included drive.
+
+**Outcome and censoring.**
+
+- **Event:** the first `failure = 1` flag after baseline, dated on the flag day.
 - **Censoring:**
-  - drives still present on 31 March are censored on that day;
-  - drives that stopped appearing without a flag ("unexplained exits") are censored
-    at their last observed day and never counted as failures.
-- **Excluded by design:**
-  - 116 drives first seen after 1 January, 17 of them with failures;
-  - 1 drive whose failure flag fell on the baseline day.
+  - Drives still present on 31 March are censored there.
+  - 96 drives disappeared earlier without a flag. They are censored at their last
+    observed day and never counted as failures.
+- **Gaps:** 10.2% of drives have at least one gap in observation. The share is 22%
+  among SMART 197 > 0 drives and 10% among SMART 197 = 0 drives.
 
-All conventions are recorded in `docs/q1_decision_record.md` and `docs/q1_decisions.json`.
+**Exposure.** SMART 197 raw > 0 versus = 0, taken from the 1 January record only: 162
+drives versus 18,371. Later values are never used, so the exposure cannot "see the
+future".
 
-## 2. Data and quality checks
-
-- **Source:** official Backblaze Drive Stats, Q1 2026 (90 daily files).
-  - The archive's SHA1 matches the recorded value, and all 90 member CRC32s match.
-  - The cohort builder reproduces the independent Q1 audit exactly: 18,650 drives,
-    1,664,558 drive-days and 129 failure flags. It produces identical output on a rerun.
-- **Calendar:** complete and contiguous. There are no duplicate drive-day keys, no
-  post-failure rows and no repeated failure flags for this model.
-- **Missing exposure:** SMART 197 and SMART 5 were present at baseline for every
-  included drive, so no imputation was needed.
-- **Exits:** 96 unexplained exits. A bounded April 1–14 check of later daily files
-  found that 93 drives reappeared. 3 January exits remain unresolved.
-- **Gaps:** 10.2% of included drives have at least one observation gap. The share is
-  22% in the 197 > 0 group (36 of 162) and 10% in the 197 = 0 group (1,850 of 18,371).
-
-## 3. Methods (pre-specified in `docs/q1_analysis_plan.md`, committed before fitting)
-
-- **Kaplan–Meier** survival by baseline group.
-  - 95% pointwise CIs use the log(−log) Greenwood method.
-- **One Cox proportional-hazards model** with a single binary covariate and Efron ties.
-  - The proportional-hazards check is a scaled-Schoenfeld test (rank time). It is
-    reported, not used to change the model.
-- **Sensitivity analyses:**
-  - **S1:** the 93 exits verified to reappear are censored at day 89.
-  - **S2:** gap days are removed from the risk set using start/stop intervals.
-- **Software:** lifelines 0.30.0 produces the results, and statsmodels 0.15.0 is an
-  independent cross-check. The coefficients agree to within 1e-8.
-- **Numerical safeguards** (documented in `docs/q1_survival_results.md` §3):
-  - damped optimisation, because full Newton steps overflowed;
-  - a whole-day entry convention in the statsmodels cross-check;
-  - at-risk counts recomputed directly.
-- **Not done:** log-rank test, a SMART 5 model, covariate adjustment and model
-  selection.
-
-## 4. Results
-
-### 4.1 Counts at baseline (included drives)
+**Table 1. Cohort accounting (included drives).**
 
 | Baseline SMART 197 | Drives | Recorded failures | Censored 31 Mar | Unexplained exits |
-|---|---|---|---|---|
-| 0 | 18,371 | 83 | 18,195 | 93 |
+|---|---:|---:|---:|---:|
+| = 0 | 18,371 | 83 | 18,195 | 93 |
 | > 0 | 162 | 28 | 131 | 3 |
-| All | 18,533 | 111 | 18,326 | 96 |
+| Total | 18,533 | 111 | 18,326 | 96 |
 
-### 4.2 Kaplan–Meier (primary analysis)
+## 4. Methods
 
-| Group | S(30) | S(60) | S(89) |
+**Time scale.** Calendar days since 1 January 2026, from 0 to 89. This is a prevalent
+cohort. Drives entered service before 2026, and their installation dates are unknown.
+
+**Kaplan–Meier estimator** [1], with 95% pointwise confidence intervals from
+Greenwood's variance [3] on the log(−log) scale. We report survival at days 30, 60 and
+89.
+
+**Cox proportional-hazards model** [2]: hazard *h(t | x) = h₀(t)·exp(βx)*, where *x*
+indicates baseline SMART 197 > 0.
+
+- Tied failure days are handled with Efron's method [4].
+- We test H₀: β = 0 with the Wald test.
+- Proportional hazards are checked with the scaled-Schoenfeld-residual test of
+  Grambsch and Therneau [5]. The test is reported, but it was not used to change the
+  model.
+
+**Pre-specified sensitivity analyses.**
+
+- **S1 (exits).** A bounded check of 1–14 April 2026 found that 93 of the 96 exits
+  reappeared. In S1 those drives are censored at day 89 instead of their last Q1 day.
+- **S2 (gaps).** Days a drive was missing are removed from the risk set, using
+  start–stop (counting-process) intervals.
+
+**Secondary analysis: adjustment for age.** Drive installation dates are not
+published. SMART 9 counts powered-on hours, so we used baseline SMART 9 ÷ 8,766 as
+"powered years", a proxy for age. We fitted one extra Cox model with SMART 197 status
+plus a linear powered-years term. It was specified and committed before fitting, and
+added after the primary plan to honour the "after accounting for drive age" in our
+proposal.
+
+**Safeguards against data-driven choices.** Before anyone looked at failure counts by
+group, we committed to the repository:
+
+- the decision rule for using SMART 197 rather than SMART 5 (keep 197 if its nonzero
+  group had at least 10 failures);
+- the censoring and gap conventions;
+- the full analysis plan.
+
+**Software.** Python 3.13, lifelines 0.30.0 [10] and statsmodels 0.15.0 [11].
+
+- Every Cox coefficient was cross-checked between the two packages and agreed to
+  within 10⁻⁶.
+- Damped Newton steps were needed, because the rare exposure and strong effect made
+  full steps from β = 0 overflow.
+
+## 5. Results
+
+![Figure 1. Kaplan–Meier estimates of the proportion of drives without a recorded failure, by baseline SMART 197 status (shaded: 95% pointwise CI).](../results/survival/km_primary.png){ width=95% }
+
+**Table 2. Kaplan–Meier estimates (primary analysis), with 95% CI.**
+
+| Group | Day 30 | Day 60 | Day 89 |
 |---|---|---|---|
-| 197 = 0 | 0.9989 (0.9982–0.9993) | 0.9976 (0.9968–0.9982) | 0.9955 (0.9944–0.9964) |
-| 197 > 0 | 0.9007 (0.8431–0.9380) | 0.8635 (0.8001–0.9079) | 0.8262 (0.7583–0.8766) |
+| SMART 197 = 0 | 0.9989 (0.9982–0.9993) | 0.9976 (0.9968–0.9982) | 0.9955 (0.9944–0.9964) |
+| SMART 197 > 0 | 0.9007 (0.8431–0.9380) | 0.8635 (0.8001–0.9079) | 0.8262 (0.7583–0.8766) |
 
-Numbers at risk on days 0, 30, 60 and 89:
+Drives at risk on days 0, 30, 60 and 89:
 
-- 197 = 0: 18,371, 18,349, 18,324, 18,195
-- 197 > 0: 162, 145, 139, 131
+- SMART 197 = 0: 18,371; 18,349; 18,324; 18,195
+- SMART 197 > 0: 162; 145; 139; 131
 
-The curves are in `results/survival/km_primary.png`.
+**Table 3. Cox models: hazard ratio for baseline SMART 197 > 0 versus = 0.**
 
-### 4.3 Cox model
+| Analysis | HR | 95% CI | Wald p | PH test p |
+|---|---:|---|---|---|
+| Primary | **43.2** | 28.1–66.3 | 1.7 × 10⁻⁶⁶ | 0.0069 |
+| S1: exits reclassified | 43.2 | 28.1–66.3 | 1.7 × 10⁻⁶⁶ | 0.0069 |
+| S2: gap days removed | 44.1 | 28.7–67.7 | 3.5 × 10⁻⁶⁷ | — |
+| Adjusted for powered years | 43.6 | 28.4–66.9 | 9.5 × 10⁻⁶⁷ | 0.0070 |
 
-| Analysis | HR | 95% CI | Wald p | PH test |
-|---|---|---|---|---|
-| Primary | 43.2 | 28.1–66.3 | 1.7e−66 | χ² = 7.29, p = 0.0069 |
-| S1 (exits reclassified) | 43.2 | 28.1–66.3 | 1.7e−66 | p = 0.0069 |
-| S2 (gap days removed) | 44.1 | 28.7–67.7 | 3.5e−67 | not computed* |
+S2 has no PH test, because lifelines provides none for start–stop fits.
 
-\*lifelines 0.30.0 has no PH test for start/stop fits.
+**Age-adjusted model.**
 
-### 4.4 Reading the results
+- Powered years have a hazard ratio of 1.11 per year (95% CI 0.85–1.43, p = 0.44),
+  with no PH violation (p = 0.92).
+- Almost all drives are 5.5–6.2 powered years old. The median is 5.73 in the zero
+  group and 6.00 in the nonzero group.
 
-- **Early concentration.** In the 197 > 0 group, about 10% of drives had a recorded
-  failure within 30 days, then roughly 4% in each later 30-day span. The proportional-
-  hazards test rejects a constant ratio, so treat the HR as an average over the quarter
-  and the survival curves and landmark values as the primary summary.
-- **Robustness to exits and gaps.** Exits barely move the estimates (S1): only 3 of
-  the 162 exposed drives exited. Removing gap days (S2) changes the HR by about 2%.
-- **Absolute risk.** The excess is large in relative terms and in absolute terms within
-  this subgroup: about 17 in 100 exposed drives versus fewer than 1 in 200 unexposed
-  drives over 89 days. But the exposed group is under 1% of the cohort.
+**Decision on the hypotheses.** At the 5% level we reject H₀: baseline SMART 197
+status is associated with the subsequent hazard of a recorded failure. This holds both
+without and with adjustment for powered-on age.
 
-## 5. Limitations
+**Shape of the effect.** About 10% of drives with SMART 197 > 0 had a recorded
+failure within 30 days, and about 4% in each later 30-day span. The PH test rejects a
+constant hazard ratio (p = 0.007). The HR of 43 is therefore an average over the
+quarter, larger early and smaller later, and the Kaplan–Meier curves are the more
+faithful summary.
 
-1. **Outcome partly defined by SMART signals.** According to Backblaze's Drive Stats
-   posts, a removed and replaced drive counts as a failure whether the removal was
-   reactive or proactive. Proactive removals are triggered by indicators such as SMART
-   stats or file-system checks, and the public data records only a 0/1 flag, not the
-   failure type ([Q3 2024](https://www.backblaze.com/blog/backblaze-drive-stats-for-q3-2024/),
-   [Q3 2025](https://www.backblaze.com/blog/backblaze-drive-stats-for-q3-2025/); quoted
-   from search results, as this session could not open the pages directly). Part of the
-   association therefore reflects Backblaze's replacement policy acting on warnings like
-   SMART 197, not spontaneous physical failure. The two cannot be separated with these
-   data.
-2. **Prevalent cohort and left truncation.** Drives had unknown prior service time. The
-   estimates are conditional on being in service on 1 January, not lifetime risk.
-   SMART 9 (powered hours) was not used as an age scale.
-3. **Ascertainment.**
-   - Failure dates are daily snapshot dates. 21 of the 44 failures that followed a gap
-     were flagged on the day the drive returned, so some dates may be ascertainment
-     dates.
-   - Day-one failures are outside Backblaze's daily failure logic.
-4. **Informative exits.** 4 drives that "exited" Q1 carried a failure flag in early
-   April, so exits are not wholly uninformative. Q1 outcomes were not changed.
-5. **Exposure specificity.** 110 of the 162 exposed drives were also nonzero on SMART 5
-   (reallocated sectors). The HR does not isolate pending-sector status from
-   reallocation.
-6. **Scope and precision.** One model, one quarter and 28 exposed events, hence a wide
-   CI (28–66). No confounder adjustment was planned or attempted.
-7. **Non-proportional hazards** (§4.4).
+**In absolute terms.** About 17 in 100 drives with a pending-sector warning had a
+recorded failure within three months, against fewer than 1 in 200 without one. The
+warning group is under 1% of the fleet, but it accounts for 25% of the failures (28 of
+111).
 
-## 6. Conclusion
+## 6. Discussion
 
-For ST12000NM0008 drives in service on 1 January 2026, a nonzero pending-sector count
-(SMART 197) at baseline marks a small subgroup — under 1% of drives — with a far higher
-quarter-ahead rate of recorded failure. The excess is concentrated in the first weeks,
-and it is robust to the pre-specified exit and gap sensitivity analyses. Because
-Backblaze's failure definition includes proactive, SMART-informed removals, this is
-best described as SMART 197 being strongly associated with recorded removal-or-failure.
-It is not evidence that pending sectors cause drives to fail, nor a validated
-prediction rule.
+The direction and size of the association are in line with Pinheiro et al. [6]. They
+found that drives with probational counts were 16 times more likely to fail within 60
+days. Our larger hazard ratio may reflect several differences:
 
-## 7. Reproducibility and provenance
+- the different outcome definition;
+- the strong early hazard;
+- one drive model;
+- a fixed-baseline comparison rather than "after the first event".
 
-- **Order of commits:**
-  - `e3cf5dd`: decisions D1–D8 committed before the per-group counts were read.
-  - `4259dc3`: per-group counts opened; D1 kept SMART 197.
-  - `2b91f38`: analysis plan committed before any model was fitted.
-  - `28cb715`: models fitted.
-- **Reproduce** (needs the Q1 ZIP in the Git-ignored `data/raw/`; see
-  `docs/q1_cohort_feasibility.md` §6):
+The result is robust to every pre-specified sensitivity analysis and to adjustment for
+powered-on age. Our exit check showed that 93 of 96 apparent exits were temporary gaps
+in the data, not departures from the fleet.
 
-```bash
+## 7. Limitations
+
+1. **The outcome is partly defined by SMART signals.** Backblaze records proactive,
+   SMART-informed replacements as failures [7], and the public flag doesn't say which
+   kind. Part of the association therefore reflects the operator's replacement policy
+   acting on warnings such as SMART 197, not spontaneous mechanical failure. The two
+   can't be separated with these data.
+2. **Prevalent cohort, left truncation, no true age.** Installation dates are unknown.
+   Powered-on hours are a proxy, and they vary over a narrow range here, so the age
+   adjustment rules out confounding by age only within that range.
+3. **Recording of failure dates.** Dates are daily snapshot dates. 21 of the 44
+   failures that followed a gap were flagged on the day the drive reappeared, so
+   recorded dates may lag true failure.
+4. **Informative exits.** 4 drives that left Q1 carried a failure flag in early April.
+5. **Overlap with other warnings.** 110 of the 162 SMART 197 > 0 drives also had
+   reallocated sectors (SMART 5 > 0). The HR is not specific to pending sectors.
+6. **Scope.** One drive model, one quarter and 28 exposed failures, hence wide
+   confidence intervals. No other covariates were available or planned.
+
+## 8. Conclusion
+
+For Seagate ST12000NM0008 drives in service on 1 January 2026, a nonzero pending-sector
+count marked a small group, under 1% of drives, with a far higher three-month rate of
+recorded failure: HR 43.2, or 43.6 after adjustment for powered-on age. The excess was
+concentrated in the first weeks and was robust to how exits, gaps and age were
+handled. Because Backblaze counts SMART-informed replacements as failures, this is
+best stated as a strong association between SMART 197 and recorded
+removal-or-failure. It is not evidence that pending sectors cause failure, nor a
+validated prediction rule.
+
+## References
+
+1. Kaplan, E. L. & Meier, P. (1958). Nonparametric estimation from incomplete
+   observations. *JASA*, 53, 457–481.
+2. Cox, D. R. (1972). Regression models and life-tables. *JRSS B*, 34, 187–220.
+3. Greenwood, M. (1926). The natural duration of cancer. *Reports on Public Health
+   and Medical Subjects*, 33, HMSO.
+4. Efron, B. (1977). The efficiency of Cox's likelihood function for censored data.
+   *JASA*, 72, 557–565.
+5. Grambsch, P. M. & Therneau, T. M. (1994). Proportional hazards tests and
+   diagnostics based on weighted residuals. *Biometrika*, 81, 515–526.
+6. Pinheiro, E., Weber, W.-D. & Barroso, L. A. (2007). Failure trends in a large disk
+   drive population. *Proc. 5th USENIX FAST*, 17–28.
+7. Backblaze (2024). Backblaze Drive Stats for Q3 2024.
+   https://www.backblaze.com/blog/backblaze-drive-stats-for-q3-2024/
+8. Backblaze (2025). Backblaze Drive Stats for Q3 2025.
+   https://www.backblaze.com/blog/backblaze-drive-stats-for-q3-2025/
+9. Backblaze. Hard Drive Data and Stats (Q1 2026 archive).
+   https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data
+10. Davidson-Pilon, C. (2019). lifelines: survival analysis in Python. *Journal of
+    Open Source Software*, 4(40), 1317.
+11. Seabold, S. & Perktold, J. (2010). statsmodels: econometric and statistical
+    modeling with Python. *Proc. 9th Python in Science Conference*.
+
+## Appendix: reproducibility
+
+All code, tests, decisions and outputs are in the project repository
+`aayush-0131/backblaze-survival-analysis`. Raw and drive-level data are never
+committed.
+
+**Order of the safeguards (commit history):**
+
+- `e3cf5dd`: decision rules committed before the per-group counts were read.
+- `4259dc3`: per-group counts opened.
+- `2b91f38`: primary analysis plan committed before fitting.
+- `28cb715`: primary results.
+- `e117f03`: age-adjusted plan committed before fitting.
+- `714fb97`: age-adjusted results.
+
+The cohort was rebuilt independently from a freshly downloaded, hash-verified archive
+and reproduced byte for byte. The test suite (49 tests) passes.
+
+To reproduce, download the Q1 ZIP to `data/raw/`, then run:
+
+```
 PYTHONPATH=src python scripts/build_cohort_skeleton.py --zip-path data/raw/data_Q1_2026.zip --expect-manifest results/audit/data_manifest.json --output-dir data/processed/q1_cohort
-```
-
-```bash
-PYTHONPATH=src python scripts/link_q1_exits.py --remote-url https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_Q2_2026.zip
-```
-
-```bash
+PYTHONPATH=src python scripts/fit_q1_age_adjusted.py --check
 PYTHONPATH=src python scripts/fit_q1_survival.py --zip-path data/raw/data_Q1_2026.zip --check
 ```
 
-- Serial-level data is never committed.
-- At the head of PR #3, the test suite (47 tests) passes, along with the Q1 and history
-  verifiers.
+The last command also needs the April exit-linkage output (`scripts/link_q1_exits.py`).

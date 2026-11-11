@@ -193,3 +193,16 @@
   construction. That is cited from Backblaze Drive Stats posts via search results;
   the pages could not be opened from the session.
 - No new analysis, model or number was added.
+
+## 2026-11-11 — age adjustment (option b) and course deliverables
+
+- Aayush chose option (b): one age-adjusted secondary Cox model, to honour the
+  proposal's "after accounting for drive age". The plan was committed (`e117f03`)
+  before fitting.
+- The Q1 ZIP was re-downloaded in this session; its SHA1 matched. The cohort was
+  rebuilt and reproduced byte for byte. The adjusted HR for SMART 197 is 43.6
+  (28.4–66.9); powered years have an HR of 1.11 per year (0.85–1.43).
+- The Backblaze failure definition was verified from the primary Q3 2024 and Q3 2025
+  posts. The Pinheiro et al. (2007) figures were verified from the USENIX paper.
+- Added the course report (PDF), the slide deck (PPTX and PDF, with speaker notes)
+  and a draft submission email. Nothing was sent.
