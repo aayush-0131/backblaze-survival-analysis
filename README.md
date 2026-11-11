@@ -107,3 +107,7 @@ The owner signed D9, which lifted the gate for the plan in `docs/q1_analysis_pla
 
 Results and limitations are in `docs/q1_survival_results.md`, and outputs in
 `results/survival/`. Reproduce with `scripts/fit_q1_survival.py --check`.
+
+## Q1 2026 write-up (2026-11-11)
+
+The project report is [`docs/q1_report.md`](docs/q1_report.md): baseline SMART 197 and recorded failure in ST12000NM0008, with the pre-specified Kaplan–Meier and Cox results, sensitivity analyses and limitations.

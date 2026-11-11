@@ -181,3 +181,15 @@
   None of these changes the model.
 - Refactor: `run_cohort` now delegates its streaming loop to `stream_cohort`. Its
   outputs are byte-identical, as the analysis rerun verified.
+
+## 2026-11-11 — group approval, write-up and merge of PR #3
+
+- Aayush stated in chat that he and his teammates approved the decisions (D1–D9),
+  the pre-specified plan and the results, and asked for the write-up and the merge
+  of PR #3 into `work/backblaze-history-audit`.
+- Added `docs/q1_report.md`, the project write-up, built only from committed
+  artifacts. Its central caveat: Backblaze counts proactive, SMART-informed
+  removals as failures, so the SMART 197 association is partly expected by
+  construction. That is cited from Backblaze Drive Stats posts via search results;
+  the pages could not be opened from the session.
+- No new analysis, model or number was added.
