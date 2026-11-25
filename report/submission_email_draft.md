@@ -1,4 +1,4 @@
-# Draft submission email (not sent; send it yourselves)
+# Submission email (final; send it yourselves)
 
 **To:** monitirtha@isibang.ac.in, mohd.khalid.stats@gmail.com, curmisha2@gmail.com, ishan.sharma.stats@gmail.com
 **Subject:** ASM II Group Project (Type I) report: Aayush Jha, Ankit Roy, Faaz Noushad
@@ -32,9 +32,8 @@ In brief:
 - Backblaze counts SMART-triggered proactive replacements as failures, so we interpret
   the result as an association rather than a causal effect.
 
-The code and analysis records are in our repository: [add link if you wish to share it].
-
 Thanking you,
 Yours sincerely,
-Aayush Jha, Ankit Roy, Faaz Noushad
-[Roll numbers]
+Aayush Jha (BSD-CC-2401)
+Ankit Roy (BSD-DH-2405)
+Faaz Noushad (BSD-BG-2405)
