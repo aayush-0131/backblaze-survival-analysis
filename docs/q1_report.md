@@ -1,7 +1,10 @@
 ---
 title: "Does a Pending-Sector Warning Predict Hard-Drive Failure? A Survival Analysis of Backblaze Drive Stats, Q1 2026"
 subtitle: "Advanced Statistical Methods II — Group Project (Type I)"
-author: "Aayush Jha · Ankit Roy · Faaz Noushad"
+author:
+  - "Aayush Jha (BSD-CC-2401)"
+  - "Ankit Roy (BSD-DH-2405)"
+  - "Faaz Noushad (BSD-BG-2405)"
 date: "November 2026"
 ---
 

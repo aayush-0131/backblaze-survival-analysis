@@ -79,7 +79,7 @@ bg.fill.solid(); bg.fill.fore_color.rgb = NAVY; bg.line.fill.background()
 W = RGBColor(0xFF, 0xFF, 0xFF)
 text(s, 0.9, 1.6, 11.5, 2.2, ["Does a Pending-Sector Warning Predict Hard-Drive Failure?"], size=40, color=W).text_frame.paragraphs[0].runs[0].font.bold = True
 text(s, 0.9, 3.4, 11.5, 1.0, ["A survival analysis of Backblaze Drive Stats, Q1 2026"], size=24, color=W)
-text(s, 0.9, 4.8, 11.5, 1.6, ["Aayush Jha  ·  Ankit Roy  ·  Faaz Noushad",
+text(s, 0.9, 4.8, 11.5, 1.6, ["Aayush Jha (BSD-CC-2401)  ·  Ankit Roy (BSD-DH-2405)  ·  Faaz Noushad (BSD-BG-2405)",
                              "Advanced Statistical Methods II — Group Project (Type I)  ·  ISI  ·  November 2026"], size=18, color=W)
 s.notes_slide.notes_text_frame.text = (
     "Introduce the team and the one-line question: does a SMART 197 'pending sector' warning on a fixed day "
